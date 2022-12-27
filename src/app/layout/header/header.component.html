@@ -1,0 +1,62 @@
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+    <div class="container-fluid">
+    
+        <a class="navbar-brand" routerLink="/log-in">Account System</a>
+        <button class="navbar-toggler" type="button" (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+            <!-- MENU -->
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                    <a class="nav-link" role="button" routerLink="/dashboard">
+                        {{ 'MENU.DASHBOARD' | translate }}
+                    </a>
+                </li>
+                <!-- 多語系 -->
+                <li class="nav-item dropdown" ngbDropdown>
+                    <a class="nav-link dropdown-toggle" type="button" ngbDropdownToggle>
+                        {{ currentLang }}
+                    </a>
+                    <ul class="dropdown-menu" ngbDropdownMenu>
+                        <a class="dropdown-item" type="button" *ngFor="let lang of langs" (click)="setTranslate(lang)">
+                            {{ lang }}
+                        </a>
+                    </ul>
+                </li>
+            </ul>
+
+            <!-- 會員相關選單 -->
+            <ul class="navbar-nav">
+                <!-- 未登入 -->
+                <li class="nav-item" *ngIf="!user">
+                    <a class="nav-link" routerLink="/log-in">
+                        <span class="px-3 btn btn-yellow text-white" type="button">
+                            {{ 'USER.SIGN_UP' | translate }}／{{ 'USER.LOG_IN' | translate }}
+                        </span>
+                    </a>
+                </li>
+                <!-- 已登入 -->
+                <ng-container *ngIf="user">
+                    <!-- User Icon -->
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/profile">
+                            <div class="icon-container">
+                                <div class="icon icon-user"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            <span class="px-3 btn btn-yellow text-white" type="button" (click)="logOut()">
+                                {{ 'USER.LOG_OUT' | translate }}
+                            </span>
+                        </a>
+                    </li>
+                </ng-container>
+            </ul>
+        </div>
+
+    </div>
+</nav>

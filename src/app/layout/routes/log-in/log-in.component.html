@@ -1,0 +1,162 @@
+<div class="login-page container-fluid">
+
+  <div class="login-modal bg-light shadow">
+    <h3 class="h3 text-center mb-5">{{ 'TITLE' | translate }}</h3>
+    
+    <div class="form-group mb-3">
+
+      <!-- 登入 -->
+      <ng-container *ngIf="pageState === 0">
+        <form class="flex-form-group mb-3" [formGroup]="logInForm">
+          <!-- 輸入信箱 -->
+          <div class="w-100">
+            <input matInput class="form-control" type="search" autocomplete="off" formControlName="email"
+                [class]="{ 'input-error': getLogInFormControl().email.errors }"
+                placeholder="{{ 'PLACEHOLDER.ENTER_EMAIL' | translate }}">
+            <small class="text-red" *ngIf="getLogInFormControl().email.hasError('required')">
+                {{ 'WARNING.FIELD_REQUIRED' | translate }}
+            </small>
+            <small class="text-red" *ngIf="getLogInFormControl().email.hasError('email')">
+              {{ 'WARNING.INVALID_EMAIL_FORMAT' | translate }}
+            </small>
+          </div>
+
+          <!-- 輸入密碼 -->
+          <div class="w-100">
+            <div class="position-relative">
+              <input matInput class="form-control" autocomplete="new-password" formControlName="password"
+                  [type]="showPassword ? 'search' : 'password'"
+                  [class]="{ 'input-error': getLogInFormControl().password.errors }"
+                  placeholder="{{ 'PLACEHOLDER.ENTER_PASSWORD' | translate }}">
+              <div class="toggle-password icon-container" type="button" (click)="toggleShowPassword()">
+                  <div *ngIf="!showPassword" class="icon icon-show-password"></div>
+                  <div *ngIf="showPassword" class="icon icon-hide-password"></div>
+              </div>
+            </div>
+            <small class="text-red" *ngIf="getLogInFormControl().password.hasError('required')">
+                {{ 'WARNING.FIELD_REQUIRED' | translate }}
+            </small>
+          </div>
+        </form>
+
+        <button type="button" class="btn btn-lg btn-green text-white w-100 py-3 mb-3"
+                [disabled]="logInForm.invalid" (click)="logIn()">
+          {{ 'USER.LOG_IN' | translate }}
+        </button>
+
+        <!-- Social login buttons -->
+        <div class="social-buttons d-flex justify-content-between flex-wrap align-items-center">          
+          <!-- Facebook -->
+          <cool-facebook-button color="light" (click)="logInFacebook()">
+            {{ 'USER.CONTINUE_WITH_FACEBOOK' | translate }}
+          </cool-facebook-button>
+
+          <!-- Google -->
+          <asl-google-signin-button
+            type="standard"
+            text="signin_with"
+            size="medium">
+          </asl-google-signin-button>
+        </div>
+      </ng-container>
+
+
+      <!-- 註冊 -->
+      <ng-container *ngIf="pageState === 1">
+        <form class="flex-form-group mb-3" [formGroup]="signUpForm">
+          <!-- 輸入信箱 -->
+          <div class="w-100">
+            <input matInput class="form-control" type="search" autocomplete="off" formControlName="email"
+                [class]="{ 'input-error': getSignUpFormControl().email.errors }"
+                placeholder="{{ 'PLACEHOLDER.ENTER_EMAIL' | translate }}">
+            <small class="text-red" *ngIf="getSignUpFormControl().email.hasError('required')">
+                {{ 'WARNING.FIELD_REQUIRED' | translate }}
+            </small>
+            <small class="text-red" *ngIf="getSignUpFormControl().email.hasError('email')">
+                {{ 'WARNING.INVALID_EMAIL_FORMAT' | translate }}
+            </small>
+          </div>
+          <!-- 輸入名字 -->
+          <div class="w-100">
+            <input matInput class="form-control" type="search" autocomplete="off" formControlName="firstName"
+                [class]="{ 'input-error': getSignUpFormControl().firstName.errors }"
+                placeholder="{{ 'PLACEHOLDER.ENTER_FIRSTNAME' | translate }}">
+            <small class="text-red" *ngIf="getSignUpFormControl().firstName.hasError('required')">
+                {{ 'WARNING.FIELD_REQUIRED' | translate }}
+            </small>
+          </div>
+          <!-- 輸入姓氏 -->
+          <div class="w-100">
+            <input matInput class="form-control" type="search" autocomplete="off" formControlName="lastName"
+                [class]="{ 'input-error': getSignUpFormControl().lastName.errors }"
+                placeholder="{{ 'PLACEHOLDER.ENTER_LASTNAME' | translate }}">
+            <small class="text-red" *ngIf="getSignUpFormControl().lastName.hasError('required')">
+                {{ 'WARNING.FIELD_REQUIRED' | translate }}
+            </small>
+          </div>
+          <!-- 輸入密碼 -->
+          <div class="w-100">
+            <input matInput class="form-control" type="search" autocomplete="off" formControlName="password"
+                [class]="{ 'input-error': getSignUpFormControl().password.errors }"
+                placeholder="{{ 'PLACEHOLDER.ENTER_PASSWORD' | translate }}">
+            <small class="text-red" *ngIf="getSignUpFormControl().password.hasError('required')">
+                {{ 'WARNING.FIELD_REQUIRED' | translate }}
+            </small>
+            <small class="text-red" *ngIf="getSignUpFormControl().password.hasError('pattern')">
+                {{ 'WARNING.INVALID_PASSWORD_FORMAT' | translate }}
+            </small>
+          </div>
+          <!-- 再次輸入密碼 -->
+          <div class="w-100">
+            <input matInput class="form-control" type="search" autocomplete="off" formControlName="passwordConfirm"
+                [class]="{ 'input-error': getSignUpFormControl().passwordConfirm.errors }"
+                placeholder="{{ 'PLACEHOLDER.ENTER_PASSWORD_CONFIRM' | translate }}">
+            <small class="text-red" *ngIf="getSignUpFormControl().passwordConfirm.hasError('required')">
+                {{ 'WARNING.FIELD_REQUIRED' | translate }}
+            </small>
+            <small class="text-red" *ngIf="!validations.confirmPassword">
+                {{ 'WARNING.NOT_SAME_WITH_NEW_PASSWORD' | translate }}
+            </small>
+          </div>
+        </form>
+            
+        <button type="button" class="btn btn-lg btn-green text-white w-100 py-3 mb-3"
+                [disabled]="signUpForm.invalid || !validations.confirmPassword" (click)="signUp()">
+          {{ 'USER.SIGN_UP' | translate }}
+        </button>
+
+        <!-- Social sign up buttons -->
+        <div class="social-buttons d-flex justify-content-between flex-wrap align-items-center">
+          <!-- <cool-google-button color="light" (click)="logInGoogle()">
+            {{ 'USER.LOG_IN_GOOGLE' | translate }}
+          </cool-google-button> -->
+          
+          <!-- Facebook -->
+          <cool-facebook-button color="light" (click)="logInFacebook()">
+            {{ 'USER.CONTINUE_WITH_FACEBOOK' | translate }}
+          </cool-facebook-button>
+  
+          <!-- Google -->
+          <asl-google-signin-button
+            type="standard"
+            text="signup_with"
+            size="medium">
+          </asl-google-signin-button>
+        </div>
+      </ng-container>
+    </div>
+
+    <!-- Footer -->
+    <div class="d-flex justify-content-between">
+      <p type="button" class="btn btn-link-blue w-100 text-center m-0 p-0 text-decoration-none"
+          *ngIf="pageState !== 0" (click)="changePageState(0)">
+          {{ 'MODEL.GO' | translate }}{{ 'USER.LOG_IN' | translate }}
+      </p>
+      <p type="button" class="btn btn-link-blue w-100 text-center m-0 p-0 text-decoration-none"
+          *ngIf="pageState !== 1" (click)="changePageState(1)">
+          {{ 'MODEL.GO' | translate }}{{ 'USER.SIGN_UP' | translate }}
+      </p>
+    </div>
+  </div>
+
+</div>

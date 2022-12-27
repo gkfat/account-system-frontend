@@ -1,0 +1,69 @@
+{
+    "TITLE": "會員系統",
+    "MENU": {
+        "DASHBOARD": "主控版"
+    },
+    "DASHBOARD": {
+        "TITLE": "主控版",
+        "TOTAL_USERS": "所有註冊使用者數",
+        "ACTIVE_USERS_TODAY": "今日活躍使用者數",
+        "ACTIVE_USERS_LAST_7_DAYS": "過去 7 天活躍使用者數",
+        "SIGNED_UP_TIME": "註冊時間",
+        "LOGGED_IN_TIMES": "登入次數",
+        "LAST_LOGGED_IN": "上次登入"
+    },
+    "USER": {
+        "PROFILE": "個人資訊",
+        "SIGN_UP": "註冊",
+        "LOG_IN": "登入",
+        "CONTINUE_WITH_FACEBOOK": "使用 Facebook 帳戶繼續",
+        "LOG_OUT": "登出",
+        "EMAIL": "信箱",
+        "PASSWORD": "密碼"
+    },
+    "VERIFY": {
+        "RESEND": "重發驗證信",
+        "1": "驗證信已發送，請至 email 收取驗證信",
+        "2": "驗證成功，請重新登入",
+        "3": "Email 已驗證。",
+        "4": "驗證失敗。"
+    },
+    "MODEL": {
+        "GO": "前往",
+        "ENTER": "輸入",
+        "TEXT": "文字",
+        "SUBMIT": "送出",
+        "CANCEL": "取消",
+        "CHANGE": "變更",
+        "RESET": "重置",
+        "CONFIRM": "確認"
+    },
+    "PLACEHOLDER": {
+        "ENTER_EMAIL": "輸入信箱",
+        "ENTER_PASSWORD": "輸入密碼",
+        "ENTER_PASSWORD_CONFIRM": "再次輸入密碼",
+        "ENTER_NEW_PASSWORD": "輸入新密碼",
+        "ENTER_NEW_PASSWORD_CONFIRM": "再次輸入新密碼",
+        "SELECT_BIRTHDATE": "選擇生日",
+        "ENTER_PHONENUMBER": "輸入聯絡電話",
+        "ENTER_FIRSTNAME": "輸入名字",
+        "ENTER_LASTNAME": "輸入姓氏"
+    },
+    "WARNING": {
+        "INVALID_EMAIL_FORMAT": "* 信箱格式錯誤",
+        "INVALID_PASSWORD_FORMAT": "* 密碼格式錯誤，須為至少 8 個字元，至少包含 1 個小寫英文、1 個大寫英文、1 個數字及 1 個特殊字元",
+        "FIELD_REQUIRED": "* 此為必填欄位",
+        "SAME_WITH_OLD_PASSWORD": "* 新舊密碼不可相同",
+        "NOT_SAME_WITH_NEW_PASSWORD": "* 兩次新密碼不相同"
+    },
+    "ALERT": {
+        "SIGN_UP_SUCCESS": "註冊成功！請至信箱收取 Email 驗證信",
+        "UPDATE_PROFILE_SUCCESS": "變更個人資料成功！",
+        "CONFIRM_RESET_PASSWORD": "是否確定要變更密碼？",
+        "CHANGE_PASSWORD_SUCCESS": "密碼變更成功，請重新登入",
+        "UNKNOWN_ERROR": "發生不知名錯誤，請重新嘗試",
+        "EMAIL_BE_USED": "Email 已被使用，請重新嘗試",
+        "ACCOUNT_NOT_SIGN_UP": "查無此帳號，請確認 Email 輸入正確",
+        "PASSWORD_INCORRECT": "密碼輸入錯誤"
+    }
+}

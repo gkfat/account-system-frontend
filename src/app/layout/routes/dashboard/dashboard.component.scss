@@ -1,0 +1,13 @@
+@import 'src/assets/styles/styles';
+
+.dashboard {
+    &-page {
+        padding: 60px 0 100px;
+        height: 100%;
+    }
+    &-block {
+        background-color: $lightgray;
+        padding: 15px;
+        border-radius: 15px;
+    }
+}

@@ -1,0 +1,133 @@
+@import './normalize';
+@import './variables.scss';
+
+html {
+  font-size: 16px;
+  line-height: 1.5rem;
+  width: 100vw;
+}
+
+body {
+  font-family: Microsoft JhengHei, MingLiU, "sans-serif", Helvetica Neue, Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
+/*
+** Global Material Styles
+*/
+// Input error
+.input-error {
+  border: 1px solid $red;
+}
+
+// 按鈕
+.btn {
+  border-radius: 10px;
+  transition: 0.3s;
+  &-yellow {
+    background-color: $mediumyellow;
+    &:hover {
+      background-color: rgba($mediumyellow, 0.9);
+    }
+  }
+  &-green {
+    background-color: $mediumgreen;
+    &:hover {
+      background-color: rgba($mediumgreen, 0.9);
+    }
+  }
+  &-link {
+    &-blue {
+      color: $darkblue;
+      &:hover {
+        color: $mediumblue;
+      }
+    }
+  }
+}
+
+// 文字顏色
+.text {
+  &-light {
+    color: $light;
+  }
+  &-lightgray {
+    color: $lightgray;
+  }
+  &-mediumgray {
+    color: $mediumgray;
+  }
+  &-red {
+    color: $red;
+  }
+}
+
+// 選擇日期格式
+.date-picker {
+  &-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+}
+
+// Icon 群組
+.icon {
+  width: 80%;
+  height: 80%;
+  background-size: cover;
+  background-position: center;
+
+  &-container {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    text-decoration: none;
+    margin: 0 auto;
+    &-lg {
+      width: 60px;
+      height: 60px;
+    }
+  }
+  &-user {
+    background-image: url(../images/user.png);
+  }
+  &-show-password {
+    background-image: url(../images/show-password.png);
+  }
+  &-hide-password {
+    background-image: url(../images/hide-password.png);
+  }
+  &-github {
+    &-dark {
+      background-image: url(../images/github-icon-dark.png);
+    }
+    &-light {
+      background-image: url(../images/github-icon-light.png);
+    }
+  }
+  &-edit {
+    background-image: url(../images/edit.png);
+  }
+}
+
+// Flex 表單群組
+.flex-form-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 15px;
+}
+
+// 隱形物件
+.invisible {
+  opacity: 0;
+}

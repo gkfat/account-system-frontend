@@ -1,0 +1,70 @@
+{
+    "TITLE": "Account System",
+    "MENU": {
+        "HOME": "Home",
+        "DASHBOARD": "Dashboard"
+    },
+    "DASHBOARD": {
+        "TITLE": "Dashboard",
+        "TOTAL_USERS": "Total users",
+        "ACTIVE_USERS_TODAY": "Active users today",
+        "ACTIVE_USERS_LAST_7_DAYS": "Active users last 7 days",
+        "SIGNED_UP_TIME": "Signed up time",
+        "LOGGED_IN_TIMES": "Logged in times",
+        "LAST_LOGGED_IN": "Last logged in"
+    },
+    "USER": {
+        "PROFILE": "Profile",
+        "SIGN_UP": "Sign up",
+        "LOG_IN": "Log in",
+        "CONTINUE_WITH_FACEBOOK": "Continue with Facebook",
+        "LOG_OUT": "Log out",
+        "EMAIL": "Email",
+        "PASSWORD": "Password"
+    },
+    "VERIFY": {
+        "RESEND": "Resend Verification",
+        "1": "Verification has been resent.",
+        "2": "Successfully verified, please log in.",
+        "3": "Email already verified.",
+        "4": "Verified failed."
+    },
+    "MODEL": {
+        "GO": "Go to ",
+        "ENTER": "Enter",
+        "TEXT": "text",
+        "SUBMIT": "Submit",
+        "CANCEL": "Cancel",
+        "CHANGE": "Change",
+        "RESET": "Reset",
+        "CONFIRM": "Confirm"
+    },
+    "PLACEHOLDER": {
+        "ENTER_EMAIL": "Enter email.",
+        "ENTER_PASSWORD": "Enter password.",
+        "ENTER_PASSWORD_CONFIRM": "Enter password again.",
+        "ENTER_NEW_PASSWORD": "Enter new password.",
+        "ENTER_NEW_PASSWORD_CONFIRM": "Enter new password again.",
+        "SELECT_BIRTHDATE": "Select birthdate.",
+        "ENTER_PHONENUMBER": "Enter phone number.",
+        "ENTER_FIRSTNAME": "Enter first name.",
+        "ENTER_LASTNAME": "Enter last name."
+    },
+    "WARNING": {
+        "INVALID_EMAIL_FORMAT": "* Invalid email format.",
+        "INVALID_PASSWORD_FORMAT": "* Password must contains at least one lower character, one upper character, one digit character, one special character",
+        "FIELD_REQUIRED": "* Field required.",
+        "SAME_WITH_OLD_PASSWORD": "* Must not be same as old password",
+        "NOT_SAME_WITH_NEW_PASSWORD": "* New password reapeated incorrectly"
+    },
+    "ALERT": {
+        "SIGN_UP_SUCCESS": "Successfully signed up! An email with verify link will be sent to you, please verify your email.",
+        "UPDATE_PROFILE_SUCCESS": "Successfully update profile.",
+        "CONFIRM_RESET_PASSWORD": "Confirm change password?",
+        "CHANGE_PASSWORD_SUCCESS": "Successfully changed password.",
+        "UNKNOWN_ERROR": "Unknown error.",
+        "EMAIL_BE_USED": "Email already be used.",
+        "ACCOUNT_NOT_SIGN_UP": "Email not registerd.",
+        "PASSWORD_INCORRECT": "Incorrect password."
+    }
+}

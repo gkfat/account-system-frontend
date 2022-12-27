@@ -1,0 +1,44 @@
+<div class="verify-page container-fluid">
+  
+  <!-- Resend verify -->
+  <ng-container *ngIf="verifyState === 0">
+    <div class="verify-modal bg-light shadow">
+      <h3 class="h3 text-center mb-5">{{ 'VERIFY.RESEND' | translate }}</h3>
+      
+      <div class="form-group">
+        <form class="flex-form-group mb-3" [formGroup]="resendVerifyForm">
+          <!-- 輸入信箱 -->
+          <div class="w-100">
+            <input matInput class="form-control" type="search" autocomplete="off" formControlName="email"
+                [class]="{ 'input-error': getFormControl().email.errors }"
+                placeholder="{{ 'PLACEHOLDER.ENTER_EMAIL' | translate }}">
+            <small class="text-red" *ngIf="getFormControl().email.hasError('required')">
+                {{ 'WARNING.FIELD_REQUIRED' | translate }}
+            </small>
+            <small class="text-red" *ngIf="getFormControl().email.hasError('email')">
+              {{ 'WARNING.INVALID_EMAIL_FORMAT' | translate }}
+          </small>
+          </div>
+        </form>
+
+        <button type="button" class="btn btn-lg btn-green text-white w-100 py-3 mb-3"
+                [disabled]="resendVerifyForm.invalid" (click)="resendVerify()">
+          {{ 'VERIFY.RESEND' | translate }}
+        </button>
+      </div>
+
+      <!-- Footer -->
+      <div class="d-flex justify-content-between">
+        <p type="button" class="btn btn-link-blue w-100 text-center m-0 p-0 text-decoration-none" [routerLink]="'/log-in'">
+          {{ 'MODEL.GO' | translate }}{{ 'USER.LOG_IN' | translate }}
+        </p>
+      </div>
+    </div>
+  </ng-container>
+  
+  <!-- Other results -->
+  <ng-container *ngIf="verifyState !== 0">
+    <h4 class="h4 text-center">{{ 'VERIFY.' + verifyState | translate }}</h4>
+  </ng-container>
+
+</div>

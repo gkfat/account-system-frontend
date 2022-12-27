@@ -1,0 +1,128 @@
+<div class="profile-page container-fluid" *ngIf="user">
+    
+    <div class="profile-block col-11 col-sm-8 col-md-6 mx-auto">
+        <!-- <div class="avatar-group d-flex justify-content-center flex-wrap mb-3" type="button"
+                [ngClass]="{ 'on-hover': onHovering }"
+                (mouseenter)="onHover(true)" (mouseleave)="onHover(false)"
+                (click)="clickSelectFile()">
+            <div class="avatar-frame shadow">
+                <div class="avatar" *ngIf="avatarImg === ''"></div>
+                <img class="img-fluid" *ngIf="avatarImg !== ''" [src]="sanitizer.bypassSecurityTrustResourceUrl(avatarImg)">
+                <input class="invisible" #selectFileInput type="file" (change)="selectFile($event)" accept=".png,.jpg,.jpeg">
+            </div>
+            <div class="icon-container shadow">
+                <div class="icon icon-edit"></div>
+            </div>
+        </div> -->
+        <div class="avatar-group d-flex justify-content-center flex-wrap mb-3">
+            <div class="avatar-frame shadow">
+                <div class="avatar"></div>
+            </div>
+        </div>
+        <div class="mb-5">
+            <h3 class="text-center">
+                {{ user.firstName }} {{ user.lastName }}
+            </h3>
+        </div>
+
+        <ul ngbNav #nav="ngbNav" class="nav-tabs mb-3">
+            <!-- Profile nav -->
+            <li class="nav-item" ngbNavItem>
+                <a class="nav-link" ngbNavLink>
+                    {{ 'USER.PROFILE' | translate }}
+                </a>
+                <ng-template ngbNavContent>
+                    <form class="flex-form-group mb-3" [formGroup]="updateProfileForm">
+                        <div class="w-100">
+                            <label class="text-mediumgray mb-1">ID</label>
+                            <input matInput class="form-control" type="search" autocomplete="off" [value]="user.id" [disabled]="true">
+                        </div>
+                        <div class="w-100">
+                            <label class="text-mediumgray mb-1">Email</label>
+                            <input matInput class="form-control" type="search" autocomplete="off" [value]="user.email" [disabled]="true">
+                        </div>
+                        <!-- First name -->
+                        <div class="w-100">
+                            <label class="text-mediumgray mb-1">First Name</label>
+                            <input matInput class="form-control" type="search" autocomplete="off" formControlName="firstName"
+                                [class]="{ 'input-error': getUpdateProfileFormControl().firstName.errors }"
+                                placeholder="{{ 'PLACEHOLDER.ENTER_FIRSTNAME' | translate }}">
+                            <small class="text-red" *ngIf="getUpdateProfileFormControl().firstName.hasError('required')">
+                                {{ 'WARNING.FIELD_REQUIRED' | translate }}
+                            </small>
+                        </div>
+                        <!-- Last name -->
+                        <div class="w-100">
+                            <label class="text-mediumgray mb-1">Last Name</label>
+                            <input matInput class="form-control" type="search" autocomplete="off" formControlName="lastName"
+                                [class]="{ 'input-error': getUpdateProfileFormControl().lastName.errors }"
+                                placeholder="{{ 'PLACEHOLDER.ENTER_LASTNAME' | translate }}">
+                            <small class="text-red" *ngIf="getUpdateProfileFormControl().lastName.hasError('required')">
+                                {{ 'WARNING.FIELD_REQUIRED' | translate }}
+                            </small>
+                        </div>
+                    </form>
+
+                    <button type="button" class="btn btn-lg w-100 btn-yellow text-white"
+                            [disabled]="updateProfileForm.invalid" (click)="updateProfile()">
+                        {{ 'MODEL.CHANGE' | translate }}{{ 'USER.PROFILE' | translate }}
+                    </button>
+                </ng-template>
+            </li>
+            <!-- Change password nav -->
+            <li class="nav-item" ngbNavItem>
+                <a class="nav-link" ngbNavLink>
+                    {{ 'MODEL.CHANGE' | translate }}{{ 'USER.PASSWORD' | translate }}
+                </a>
+                <ng-template ngbNavContent>
+                    <form class="flex-form-group mb-3" [formGroup]="changePasswordForm">
+                        <!-- 輸入舊密碼 -->
+                        <div class="w-100">
+                            <input matInput class="form-control" type="search" autocomplete="off" formControlName="oldPassword"
+                                [class]="{ 'input-error': getChangePasswordFormControl().oldPassword.errors }"
+                                placeholder="{{ 'PLACEHOLDER.ENTER_PASSWORD' | translate }}">
+                            <small class="text-red" *ngIf="getChangePasswordFormControl().oldPassword.hasError('required')">
+                                {{ 'WARNING.FIELD_REQUIRED' | translate }}
+                            </small>
+                        </div>
+                        <!-- 輸入新密碼 -->
+                        <div class="w-100">
+                            <input matInput class="form-control" type="search" autocomplete="off" formControlName="newPassword"
+                                [class]="{ 'input-error': getChangePasswordFormControl().newPassword.errors }"
+                                placeholder="{{ 'PLACEHOLDER.ENTER_NEW_PASSWORD' | translate }}">
+                            <small class="text-red" *ngIf="getChangePasswordFormControl().newPassword.hasError('required')">
+                                {{ 'WARNING.FIELD_REQUIRED' | translate }}
+                            </small>
+                            <small class="text-red" *ngIf="getChangePasswordFormControl().newPassword.hasError('pattern')">
+                                {{ 'WARNING.INVALID_PASSWORD_FORMAT' | translate }}
+                            </small>
+                            <small class="text-red" *ngIf="!validations.usablePassword">
+                                {{ 'WARNING.SAME_WITH_OLD_PASSWORD' | translate }}
+                            </small>
+                        </div>
+                        <!-- 再次輸入新密碼 -->
+                        <div class="w-100">
+                            <input matInput class="form-control" type="search" autocomplete="off" formControlName="newPasswordConfirm"
+                                [class]="{ 'input-error': getChangePasswordFormControl().newPasswordConfirm.errors }"
+                                placeholder="{{ 'PLACEHOLDER.ENTER_NEW_PASSWORD_CONFIRM' | translate }}">
+                            <small class="text-red" *ngIf="getChangePasswordFormControl().newPasswordConfirm.hasError('required')">
+                                {{ 'WARNING.FIELD_REQUIRED' | translate }}
+                            </small>
+                            <small class="text-red" *ngIf="!validations.confirmPassword">
+                                {{ 'WARNING.NOT_SAME_WITH_NEW_PASSWORD' | translate }}
+                            </small>
+                        </div>
+                    </form>
+                                
+                    <button type="button" class="btn btn-lg w-100 btn-yellow text-white"
+                            [disabled]="changePasswordForm.invalid || !validations.confirmPassword || !validations.usablePassword" (click)="changePassword()">
+                        {{ 'MODEL.CHANGE' | translate }}{{ 'USER.PASSWORD' | translate }}
+                    </button>
+                </ng-template>
+            </li>
+        </ul>
+
+        <div class="px-3" [ngbNavOutlet]="nav"></div>
+    </div>
+
+</div>

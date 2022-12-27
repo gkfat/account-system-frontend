@@ -1,0 +1,53 @@
+@import 'src/assets/styles/styles';
+
+.profile {
+    &-page {
+        padding: 60px 0 100px;
+        height: 100%;
+
+        .block {
+            max-width: 450px;
+        }
+
+        .avatar {
+            &-group {
+                position: relative;
+
+                .icon-container {
+                    position: absolute;
+                    transition: 0.3s;
+                    left: 58%;
+                    top: 65%;
+                    background-color: $mediumblue;
+                    border-radius: 50%;
+                    overflow: hidden;
+                    .icon-edit {
+                        transform: scale(0.7);
+                        filter: invert(80%) sepia(85%) saturate(2%) hue-rotate(269deg) brightness(113%) contrast(101%);
+                    }
+                }
+                &.on-hover {
+                    .icon-container {
+                        transform: translateY(3px);
+                        box-shadow: none !important;
+                    }
+                    .avatar {
+                        filter: brightness(105%);
+                    }
+                }
+            }
+            &-frame {
+                overflow: hidden;
+                border-radius: 30px;
+                width: 100px;
+                height: 100px;
+            }
+            transition: 0.3s;
+            width: 100%;
+            height: 100%;
+            background-image: url(../../../../assets/images/avatar.png);
+            background-position: center;
+            background-size: 120%;
+        }
+    }
+}

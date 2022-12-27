@@ -1,0 +1,49 @@
+@import 'src/assets/styles/styles';
+
+.login {
+  &-page {
+    padding: 60px 0 100px;
+    height: 100%;
+    background: linear-gradient(45deg, #88edff 0%, #93d4d9 30%, #93d4d9 30%, #3778aa 100%);
+  }
+
+  &-modal {
+    padding: 30px 50px;
+    width: 100%;
+    max-width: 500px;
+    border-radius: 15px;
+    margin: 0 auto;
+
+    @media (max-width: 576px) {
+      padding: 30px 15px;
+      background-color: transparent !important;
+      box-shadow: none !important;
+    }
+
+    .h3 {
+      @media (max-width: 576px) {
+        color: $light;
+      }
+    }
+
+    .toggle-password {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 5px;
+      width: 40px;
+      height: 30px;
+    }
+
+    .btn-green {
+      @media (max-width: 576px) {
+        background-color: transparent;
+        border: 1px solid $light;
+      }
+    }
+
+    .social-buttons {
+      gap: 10px;
+    }
+  }
+}

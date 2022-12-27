@@ -1,0 +1,10 @@
+@import 'src/assets/styles/styles';
+
+.layout {
+    height: calc(100vh - 56px);
+    display: flex;
+    flex-direction: column;
+    &-inner {
+        flex-grow: 1;
+    }
+}
