@@ -93,7 +93,6 @@ export class VerifyComponent extends BaseComponent implements OnInit {
 
   // 驗證 email
   public verifyEmail(params: Params) {
-    console.log(params);
     const payload = new Users.Verify({
       id: params['id'],
       verificationCode: params['verificationCode']

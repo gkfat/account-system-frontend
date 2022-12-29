@@ -80,7 +80,6 @@ export class ProfileComponent extends BaseComponent implements OnInit {
       tap((state: Users.User | null) => {
         if ( state ) {
           this.user = state;
-          console.log('user:', this.user)
           this.resetUpdateProfileForm();
           this.resetChangePasswordForm();
         }

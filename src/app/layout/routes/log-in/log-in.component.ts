@@ -97,23 +97,26 @@ export class LogInComponent extends BaseComponent implements OnInit {
         tap(user => {
           // Listen social login or sign up
           if ( user ) {
-            if ( this.pageState === 0 ) { // Log in
-              console.log('Log in with', user.provider);
-              const payload = new Users.LogIn();
-              payload.email = user.email;
-              payload.socialLogin = true;
-              this.authStore.dispatch(new LogInAction(payload));
-            } else { // Sign up
-              console.log('Sign up with', user.provider);
-              this.signUpForm.patchValue({
-                email: user.email,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                password: '',
-                passwordConfirm: '',
-                socialSignUp: true
-              })
-              this.signUp();
+            const token = localStorage.getItem(this.tokenKey);
+            if (!token) {
+              if ( this.pageState === 0 ) { // Log in
+                  console.log('Log in with', user.provider);
+                  const payload = new Users.LogIn();
+                  payload.email = user.email;
+                  payload.socialLogin = true;
+                  this.authStore.dispatch(new LogInAction(payload));
+              } else { // Sign up
+                  console.log('Sign up with', user.provider);
+                  this.signUpForm.patchValue({
+                    email: user.email,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    password: '',
+                  passwordConfirm: '',
+                  socialSignUp: true
+                })
+                this.signUp();
+              }
             }
           }
         }),

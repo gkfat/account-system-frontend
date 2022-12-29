@@ -20,7 +20,7 @@ export class HeaderComponent extends BaseComponent implements OnInit {
   public user: Users.User | null = null;
 
   public langs: string[] = this.translateServ.langs; 
-  public currentLang = this.langs[0];
+  public currentLang: string = this.langs[0];
 
   public isCollapsed: boolean = true;
 
@@ -50,6 +50,7 @@ export class HeaderComponent extends BaseComponent implements OnInit {
 
   public setTranslate(lang: string) {
     this.translateServ.setDefaultLang(lang);
+    this.currentLang = lang;
   }
 
   // 登出

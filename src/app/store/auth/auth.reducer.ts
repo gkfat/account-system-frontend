@@ -14,7 +14,7 @@ export function authReducer(state: AuthState = INITIAL_AUTH_STATE, action: Actio
         accessToken: accessToken
       };
     case auth.LOG_OUT:
-      console.log('logout success')
+      console.log('Logout success');
       return {
         accessToken: null,
         user: null
