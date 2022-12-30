@@ -8,7 +8,7 @@ CURRENT_COMMIT=`git rev-parse HEAD`
 
 PROJECTPATH="/Users/user/account-system-frontend"
 REMOTE_USER="ec2-user"
-REMOTE_SERVER="ec2-52-14-103-124.us-east-2.compute.amazonaws.com"
+REMOTE_SERVER="ec2-3-140-103-253.us-east-2.compute.amazonaws.com"
 CERT_KEY="/Users/user/sideProjectEC2.pem"
 REMOTE_BIN="/var/www/html/account-system-frontend"
 
