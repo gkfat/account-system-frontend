@@ -1,6 +1,8 @@
 # Account System full-stack project
 此為會員系統全端專案。
 
+* Demo：[https://gkfat.com](https://gkfat.com)
+* API 文件：[API documentation](http://3.140.103.253:5000/api-docs/)
 * 前端：[https://github.com/gkfat/account-system-frontend](https://github.com/gkfat/account-system-frontend)
 * 後端：[https://github.com/gkfat/account-system-backend](https://github.com/gkfat/account-system-backend)
 
@@ -15,6 +17,8 @@
 * 登出
 
 ### Technology
+* Hosting
+    * AWS EC2
 * Back-end
     * `Npm`: Project management
     * `Node.js`: API server
