@@ -73,7 +73,7 @@ export const socialLoginConfig = [
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {
-        autoLogin: true,
+        autoLogin: false,
         providers: socialLoginConfig,
         onError: (err) => console.error(err)
       } as SocialAuthServiceConfig,

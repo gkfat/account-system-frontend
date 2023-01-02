@@ -59,6 +59,7 @@
     },
     "ALERT": {
         "SIGN_UP_SUCCESS": "Successfully signed up! An email with verify link will be sent to you, please verify your email.",
+        "SOCIAL_SIGN_UP_SUCCESS": "Successfully signed up with social account! Please log in.",
         "UPDATE_PROFILE_SUCCESS": "Successfully update profile.",
         "CONFIRM_RESET_PASSWORD": "Confirm change password?",
         "CHANGE_PASSWORD_SUCCESS": "Successfully changed password.",

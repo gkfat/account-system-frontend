@@ -17,7 +17,7 @@ export class ErrorHandlerService {
     if ( err.error.message !== undefined || err.error.data !== undefined ) {
       const message = JSON.stringify(err.error.message);
       const data = JSON.stringify(err.error.data);
-      alert(`Message: ${message}, Data: ${data}`);
+      alert(`Code: ${err.status}, Message: ${message}, Data: ${data}`);
     } else {
       alert(this.translateServ.instant('ALERT.UNKNOWN_ERROR'));
     }

@@ -10,5 +10,5 @@ export const environment = {
     token: 'accessToken'
   },
   location: 'TW',
-  apiURL: 'http://127.0.0.1:5000'
+  apiURL: 'http://127.0.0.1:16888'
 };

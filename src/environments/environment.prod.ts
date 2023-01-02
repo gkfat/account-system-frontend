@@ -10,5 +10,5 @@ export const environment = {
     token: 'accessToken'
   },
   location: 'TW',
-  apiURL: 'http://127.0.0.1/api'
+  apiURL: 'https://gkfat.com/api'
 };

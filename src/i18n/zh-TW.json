@@ -58,6 +58,7 @@
     },
     "ALERT": {
         "SIGN_UP_SUCCESS": "註冊成功！請至信箱收取 Email 驗證信",
+        "SOCIAL_SIGN_UP_SUCCESS": "Social 註冊成功！請直接登入",
         "UPDATE_PROFILE_SUCCESS": "變更個人資料成功！",
         "CONFIRM_RESET_PASSWORD": "是否確定要變更密碼？",
         "CHANGE_PASSWORD_SUCCESS": "密碼變更成功，請重新登入",

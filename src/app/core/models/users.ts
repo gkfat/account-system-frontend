@@ -9,6 +9,7 @@ export namespace Users {
     lastName: string = '';
     loggedInTimes: number = 0;
     sessions: Session[] = [];
+    verified: boolean = false;
   }
 
   export class Session {

@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Users, APIResponse } from 'src/app/core/models';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -31,10 +32,16 @@ export class AuthEffects {
       switchMap(payload => {
         this.spinnerState.dispatch(new OpenAction(''));
         return this.usersServ.LogIn(payload).pipe(
-          catchError(err => {
+          catchError((err: HttpErrorResponse) => {
             this.spinnerState.dispatch(new CloseAction());
-            // TODO: 用 status code 來判斷，若為使用者未驗證則導向重發驗證信
-            this.router.navigate(['/resend-verify']);
+            // 以 status code 來判斷，若為使用者未驗證則導向重發驗證信
+            if ( err.status === 401 ) {
+              this.router.navigate(['/resend-verify']);
+            }
+            // Invalid email or password
+            if ( err.status === 400 ) {
+              
+            }
             this.errServ.HttpErrorHandle(err);
             return of();
           }),

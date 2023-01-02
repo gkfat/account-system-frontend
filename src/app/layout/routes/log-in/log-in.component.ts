@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { BaseComponent } from 'src/app/components/base.component';
 import { Router } from '@angular/router';
@@ -94,24 +95,24 @@ export class LogInComponent extends BaseComponent implements OnInit {
       }),
       switchMap(() => this.socialAuthServ.initState),
       switchMap(() => this.socialAuthServ.authState),
-        tap(user => {
-          // Listen social login or sign up
-          if ( user ) {
+      tap(user => {
+        // Listen social login or sign up
+        if ( user ) {
             const token = localStorage.getItem(this.tokenKey);
-            if (!token) {
+            if ( !token ) {
               if ( this.pageState === 0 ) { // Log in
-                  console.log('Log in with', user.provider);
-                  const payload = new Users.LogIn();
-                  payload.email = user.email;
-                  payload.socialLogin = true;
-                  this.authStore.dispatch(new LogInAction(payload));
+                console.log('Log in with', user.provider);
+                const payload = new Users.LogIn();
+                payload.email = user.email;
+                payload.socialLogin = true;
+                this.authStore.dispatch(new LogInAction(payload));
               } else { // Sign up
-                  console.log('Sign up with', user.provider);
-                  this.signUpForm.patchValue({
-                    email: user.email,
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    password: '',
+                console.log('Sign up with', user.provider);
+                this.signUpForm.patchValue({
+                  email: user.email,
+                  firstName: user.firstName,
+                  lastName: user.lastName,
+                  password: '',
                   passwordConfirm: '',
                   socialSignUp: true
                 })
@@ -211,15 +212,19 @@ export class LogInComponent extends BaseComponent implements OnInit {
     this.spinnerState.dispatch(new OpenAction(''));
     this.usersServ.CreateUser(payload).pipe(
       takeUntil(this.unsubscribe$),
-      catchError(err => {
+      catchError((err: HttpErrorResponse) => {
         this.errServ.HttpErrorHandle(err);
         this.spinnerState.dispatch(new CloseAction());
         return of();
       }),
       map(res => res.data),
-      tap(() => {
+      tap(user => {
         this.spinnerState.dispatch(new CloseAction());
-        alert(this.translateServ.instant('ALERT.SIGN_UP_SUCCESS'));
+        if ( !user.verified ) {
+          alert(this.translateServ.instant('ALERT.SIGN_UP_SUCCESS'));
+        } else {
+          alert(this.translateServ.instant('ALERT.SOCIAL_SIGN_UP_SUCCESS'));
+        }
         this.changePageState(0);
       })
     ).subscribe();

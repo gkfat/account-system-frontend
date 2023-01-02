@@ -1,3 +1,4 @@
+import { switchMap } from 'rxjs/operators';
 import { BaseComponent } from 'src/app/components/base.component';
 import { Users } from 'src/app/core/models';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
@@ -55,12 +56,16 @@ export class HeaderComponent extends BaseComponent implements OnInit {
 
   // 登出
   public logOut() {
-    this.socialAuthServ.authState.subscribe(user => {
-      if (user) {
-        this.socialAuthServ.signOut();
-      }
-      this.authStore.dispatch(new LogOutAction());
-    });
+    this.socialAuthServ.initState.pipe(
+      takeUntil(this.unsubscribe$),
+      tap(() => this.authStore.dispatch(new LogOutAction())),
+      switchMap(() => this.socialAuthServ.authState),
+      tap(user => {
+        if (user) {
+          this.socialAuthServ.signOut(true);
+        }
+      }),
+    ).subscribe();
   }
 
 }
