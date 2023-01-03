@@ -96,7 +96,7 @@
           </div>
           <!-- 輸入密碼 -->
           <div class="w-100">
-            <input matInput class="form-control" type="search" autocomplete="off" formControlName="password"
+            <input matInput class="form-control" type="password" autocomplete="off" formControlName="password"
                 [class]="{ 'input-error': getSignUpFormControl().password.errors }"
                 placeholder="{{ 'PLACEHOLDER.ENTER_PASSWORD' | translate }}">
             <small class="text-red" *ngIf="getSignUpFormControl().password.hasError('required')">
@@ -108,7 +108,7 @@
           </div>
           <!-- 再次輸入密碼 -->
           <div class="w-100">
-            <input matInput class="form-control" type="search" autocomplete="off" formControlName="passwordConfirm"
+            <input matInput class="form-control" type="password" autocomplete="off" formControlName="passwordConfirm"
                 [class]="{ 'input-error': getSignUpFormControl().passwordConfirm.errors }"
                 placeholder="{{ 'PLACEHOLDER.ENTER_PASSWORD_CONFIRM' | translate }}">
             <small class="text-red" *ngIf="getSignUpFormControl().passwordConfirm.hasError('required')">

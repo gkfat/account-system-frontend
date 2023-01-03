@@ -207,7 +207,7 @@ export class LogInComponent extends BaseComponent implements OnInit {
             lastName: formControl.lastName.value,
             password: formControl.password.value,
             passwordConfirm: formControl.passwordConfirm.value,
-            socialSignUp: formControl.socialSignUp.value
+            socialSignUp: false
           });
     this.spinnerState.dispatch(new OpenAction(''));
     this.usersServ.CreateUser(payload).pipe(
