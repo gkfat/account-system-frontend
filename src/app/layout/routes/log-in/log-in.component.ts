@@ -43,7 +43,7 @@ export class LogInComponent extends BaseComponent implements OnInit {
     ]],
     password: [null, [
       Validators.required,
-      Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/)
+      Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-_+]).{8,}$/)
     ]],
     passwordConfirm: [null, Validators.required],
     firstName: [null, Validators.required],
