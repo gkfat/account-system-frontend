@@ -7,7 +7,12 @@ export namespace Users {
     email: string = '';
     firstName: string = '';
     lastName: string = '';
-    loggedInTimes: number = 0;
+    nickName: string = '';
+    roleLevel: number = 1;
+    level: number = 1;
+    experience: number = 0;
+    avatarId: number = 0;
+    frameId: number = 0;
     sessions: Session[] = [];
     verified: boolean = false;
   }
@@ -27,6 +32,7 @@ export namespace Users {
     email: string = '';
     firstName: string = '';
     lastName: string = '';
+    nickName: string = '';
     password: string = '';
     passwordConfirm: string = '';
     socialSignUp: boolean = false;
@@ -34,7 +40,7 @@ export namespace Users {
     constructor ( data?: any ) {
       if ( data ) {
         Object.keys(this).forEach(key => {
-          if ( key ) {
+          if ( data[key] ) {
             this[key] = data[key];
           }
         });
@@ -59,7 +65,7 @@ export namespace Users {
     constructor ( data?: any ) {
       if ( data ) {
         Object.keys(this).forEach(key => {
-          if ( key ) {
+          if ( data[key] ) {
             this[key] = data[key];
           }
         });
@@ -77,7 +83,7 @@ export namespace Users {
     constructor ( data?: any ) {
       if ( data ) {
         Object.keys(this).forEach(key => {
-          if ( key ) {
+          if ( data[key] ) {
             this[key] = data[key];
           }
         });
@@ -96,7 +102,7 @@ export namespace Users {
     constructor ( data?: any ) {
       if ( data ) {
         Object.keys(this).forEach(key => {
-          if ( key ) {
+          if ( data[key] ) {
             this[key] = data[key];
           }
         });
@@ -104,17 +110,20 @@ export namespace Users {
     }
   }
 
-  export class UpdateData {
+  export class UpdateUser {
     [key: string]: any;
 
     id: number = 0;
     firstName: string = '';
     lastName: string = '';
+    nickName: string = '';
+    avatarId: number = 0;
+    frameId: number = 0;
 
     constructor ( data?: any ) {
       if ( data ) {
         Object.keys(this).forEach(key => {
-          if ( key ) {
+          if ( data[key] ) {
             this[key] = data[key];
           }
         });
@@ -131,7 +140,7 @@ export namespace Users {
     constructor ( data?: any ) {
       if ( data ) {
         Object.keys(this).forEach(key => {
-          if ( key ) {
+          if ( data[key] ) {
             this[key] = data[key];
           }
         });
@@ -147,7 +156,7 @@ export namespace Users {
     constructor ( data?: any ) {
       if ( data ) {
         Object.keys(this).forEach(key => {
-          if ( key ) {
+          if ( data[key] ) {
             this[key] = data[key];
           }
         });

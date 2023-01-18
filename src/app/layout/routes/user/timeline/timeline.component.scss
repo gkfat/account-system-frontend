@@ -1,0 +1,35 @@
+@import 'src/assets/styles/styles';
+
+.timeline {
+    &-page {
+        position: relative;
+    }
+    &-block {
+        .post-container {
+            position: relative;
+            .icon-container {
+                background-color: $mediumyellow;
+            }
+        }
+    }
+}
+
+::ng-deep .angular-editor {
+    &-textarea, &-toolbar {
+        outline: none;
+        border: 1px solid $mediumgray;
+        border-radius: 10px;
+    }
+    #subscript-,
+    #superscript-,
+    #justifyLeft-,
+    #justifyCenter-,
+    #justifyRight-,
+    #justifyFull-,
+    #link-,
+    #unlink-,
+    #insertImage-,
+    #insertVideo- {
+        display: none;
+    }
+}

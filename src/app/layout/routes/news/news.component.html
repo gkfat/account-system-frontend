@@ -1,0 +1,141 @@
+<div class="news-page py-5 container-fluid">
+    <h2 class="text-center mb-3">{{ 'NEWS.TITLE' | translate }}</h2>
+
+    <div class="col-sm-8 mx-auto">
+        <ul ngbNav #nav="ngbNav" class="nav-tabs mb-3">
+            <!-- 公告文章 -->
+            <li class="nav-item" ngbNavItem>
+                <a class="nav-link" ngbNavLink>
+                    {{ 'NEWS.TITLE' | translate }}
+                </a>
+                <ng-template ngbNavContent>
+                    <ng-container *ngFor="let post of postsData?.data">
+                        <app-post [post]="post"></app-post>
+                    </ng-container>
+                </ng-template>
+            </li>
+            <!-- 註冊的使用者 -->
+            <li class="nav-item" ngbNavItem *ngIf="user">
+                <a class="nav-link" ngbNavLink>
+                    {{ 'NEWS.TOTAL_USERS' | translate }}
+                </a>
+                <ng-template ngbNavContent>
+                    <div class="flex-form-group">
+                        <ng-container *ngFor="let user of usersData?.data">
+                            <div type="button" class="user-info" (click)="navigateTo('user/timeline', { id: user.id })">
+                                <app-user-info
+                                    [inputUser]="user"
+                                    [size]="'sm'"
+                                    [showConfigIcon]="false"
+                                    [showExp]="false">
+                                </app-user-info>
+                            </div>
+                        </ng-container>
+                    </div>
+                </ng-template>
+            </li>
+            <!-- 資料維護 -->
+            <li class="nav-item" ngbNavItem *ngIf="user && user.roleLevel === 1">
+                <a class="nav-link" ngbNavLink>
+                    {{ 'NEWS.MAINTAIN' | translate }}
+                </a>
+                <ng-template ngbNavContent>
+                    <!-- Upload File -->
+                    <ngb-accordion #acc="ngbAccordion">
+                        <ngb-panel [title]="'DECORATOR.UPLOAD' | translate">
+                            <ng-template ngbPanelContent>
+                                <div class="custom-drop-zone" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
+                                    <ngx-dropzone-label>Select file</ngx-dropzone-label>
+                                </div>
+            
+                                <table class="table table-decorators my-3">
+                                    <thead>
+                                        <tr>
+                                            <th class="w-25 text-center" scope="col"></th>
+                                            <th class="w-25 text-center" scope="col">{{ 'DECORATOR.CATEGORY.TITLE' | translate }}</th>
+                                            <th class="w-25 text-center" scope="col">{{ 'DECORATOR.NAME' | translate }}</th>
+                                            <th class="w-25 text-center" scope="col">{{ 'DECORATOR.LEVEL_LIMIT' | translate }}</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let decorator of createDecoratorsData; let i = index">
+                                            <td class="text-center">
+                                                <img class="img-fluid" [src]="decorator.content" />
+                                            </td>
+                                            <td class="text-center">
+                                                <mat-select class="form-control" [(ngModel)]="decorator.categoryId">
+                                                    <mat-option [value]="0">{{ 'DECORATOR.CATEGORY.0' | translate }}</mat-option>
+                                                    <mat-option [value]="1">{{ 'DECORATOR.CATEGORY.1' | translate }}</mat-option>
+                                                </mat-select>
+                                            </td>
+                                            <td class="text-center">
+                                                <input matInput class="form-control" [(ngModel)]="decorator.name">
+                                            </td>
+                                            <td class="text-center">
+                                                <input type="number" matInput class="form-control text-center" [(ngModel)]="decorator.levelLimit">
+                                            </td>
+                                            <td class="text-center">
+                                                <button type="button" class="btn-close" aria-label="Close" (click)="removeFile(i)"></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <button type="button" class="btn w-100 text-white btn-yellow mb-3" (click)="createDecorators()">
+                                    {{ 'MODEL.SUBMIT' | translate }}
+                                </button>
+                            </ng-template>
+                        </ngb-panel>
+                    </ngb-accordion>
+
+                    <!-- Decorators list -->
+                    <table class="table table-decorators mb-3" *ngIf="decoratorsData">
+                        <thead>
+                            <tr>
+                                <th class="text-center text-nowrap" scope="col">#</th>
+                                <th class="w-25 text-center text-nowrap" scope="col"></th>
+                                <th class="w-25 text-center text-nowrap" scope="col">{{ 'DECORATOR.CATEGORY.TITLE' | translate }}</th>
+                                <th class="w-25 text-center text-nowrap" scope="col">{{ 'DECORATOR.NAME' | translate }}</th>
+                                <th class="w-25 text-center text-nowrap" scope="col">{{ 'DECORATOR.LEVEL_LIMIT' | translate }}</th>
+                                <!-- <th class="w-25 text-center text-nowrap" scope="col">{{ 'DECORATOR.USERS' | translate }}</th> -->
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let decorator of decoratorsData.data; let i = index">
+                                <td class="text-center">{{ decorator.id }}</td>
+                                <td class="text-center">
+                                    <img class="img-fluid" [src]="decorator.content" />
+                                </td>
+                                <td class="text-center">
+                                    <mat-select class="form-control" [(ngModel)]="decorator.categoryId">
+                                        <mat-option [value]="0">{{ 'DECORATOR.CATEGORY.0' | translate }}</mat-option>
+                                        <mat-option [value]="1">{{ 'DECORATOR.CATEGORY.1' | translate }}</mat-option>
+                                    </mat-select>
+                                </td>
+                                <td class="text-center">
+                                    <input matInput class="form-control" [(ngModel)]="decorator.name">
+                                </td>
+                                <td class="text-center">
+                                    <input type="number" matInput class="form-control text-center" [(ngModel)]="decorator.levelLimit">
+                                </td>
+                                <!-- <td class="text-center">
+                                    {{ decorator.users.length }}
+                                </td> -->
+                                <td class="text-center">
+                                    <button type="button" class="btn-close" aria-label="Close" (click)="deleteDecorator(decorator.id)"></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button type="button" class="btn w-100 text-white btn-yellow mb-3" (click)="updateDecorators()">
+                        {{ 'MODEL.CHANGE' | translate }}
+                    </button>
+                </ng-template>
+            </li>
+        </ul>
+    
+        <div [ngbNavOutlet]="nav"></div>
+    </div>
+
+</div>

@@ -58,14 +58,18 @@ export class HeaderComponent extends BaseComponent implements OnInit {
   public logOut() {
     this.socialAuthServ.initState.pipe(
       takeUntil(this.unsubscribe$),
-      tap(() => this.authStore.dispatch(new LogOutAction())),
       switchMap(() => this.socialAuthServ.authState),
-      tap(user => {
-        if (user) {
+      tap(socialUser => {
+        if ( socialUser ) {
           this.socialAuthServ.signOut(true);
         }
       }),
+      tap(() => this.authStore.dispatch(new LogOutAction()))
     ).subscribe();
+  }
+
+  public navigateTo(url: string, params: object) {
+    this.router.navigate([url], { queryParams: params });
   }
 
 }

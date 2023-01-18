@@ -1,0 +1,11 @@
+<div class="user-page py-5" *ngIf="user">
+  <div class="user-page-header"></div>
+  <ng-container *ngIf="readyToShow">
+    <app-user-info
+      [classes]="'mx-auto mb-3'"
+      [inputUser]="queryUser"
+      [showConfigIcon]="showConfigIcon">
+    </app-user-info>
+    <app-timeline [queryUserId]="queryUserId"></app-timeline>
+  </ng-container>
+</div>

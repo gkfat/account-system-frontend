@@ -6,12 +6,11 @@ import { switchMap, takeUntil } from 'rxjs/operators';
 import { UsersService } from 'src/app/api/users.service';
 import { Store } from '@ngrx/store';
 import { Users } from 'src/app/core/models';
-import { AuthState, selectState, LogInAction } from 'src/app/store/auth';
+import { AuthState, selectState, LogInAction, TokenLogInAction } from 'src/app/store/auth';
 import { CloseAction, OpenAction, SpinnerState } from 'src/app/store/spinner/index';
 import { map, tap, catchError, of } from 'rxjs';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ErrorHandlerService } from 'src/app/api/error-handler.service';
-import { environment } from 'src/environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { SocialAuthService, FacebookLoginProvider } from '@abacritt/angularx-social-login';
 
@@ -24,8 +23,8 @@ import { SocialAuthService, FacebookLoginProvider } from '@abacritt/angularx-soc
 export class LogInComponent extends BaseComponent implements OnInit {
   @ViewChild('googleLoginButton', { read: ElementRef }) googleLoginButton!: ElementRef;
 
-  private tokenKey: string = environment.cookieKeys.token;
   private auth$ = this.authStore.select(selectState);
+  public logIning: boolean = false;
 
   // 0: log in, 1: sign up
   public pageState: number = 0;
@@ -43,7 +42,8 @@ export class LogInComponent extends BaseComponent implements OnInit {
     ]],
     password: [null, [
       Validators.required,
-      Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-_+]).{8,}$/)
+      // Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-_+]).{8,}$/)
+      Validators.pattern(/^(?=.*?[a-z]|[A-Z])(?=.*?[0-9]).{8,}$/)
     ]],
     passwordConfirm: [null, Validators.required],
     firstName: [null, Validators.required],
@@ -87,37 +87,36 @@ export class LogInComponent extends BaseComponent implements OnInit {
     this.auth$.pipe(
       takeUntil(this.unsubscribe$),
       tap(state => {
-        if ( state.accessToken && state.user ) {
-          this.router.navigate(['/dashboard']);
-        } else {
-          this.resetSignUpForm();
+        if ( state.user ) {
+          this.router.navigate(['/user/timeline'], { queryParams: { id: state.user.id } });
         }
+        this.resetSignUpForm();
+        this.logIning = false;
       }),
       switchMap(() => this.socialAuthServ.initState),
       switchMap(() => this.socialAuthServ.authState),
-      tap(user => {
+      tap(socialUser => {
         // Listen social login or sign up
-        if ( user ) {
-            const token = localStorage.getItem(this.tokenKey);
-            if ( !token ) {
-              if ( this.pageState === 0 ) { // Log in
-                console.log('Log in with', user.provider);
+        if ( socialUser ) {
+            if ( this.pageState === 0 ) { // Log in
+              if ( !this.logIning ) {
+                console.log('Log in with', socialUser.provider);
                 const payload = new Users.LogIn();
-                payload.email = user.email;
+                payload.email = socialUser.email;
                 payload.socialLogin = true;
                 this.authStore.dispatch(new LogInAction(payload));
-              } else { // Sign up
-                console.log('Sign up with', user.provider);
-                this.signUpForm.patchValue({
-                  email: user.email,
-                  firstName: user.firstName,
-                  lastName: user.lastName,
-                  password: '',
-                  passwordConfirm: '',
-                  socialSignUp: true
-                })
-                this.signUp();
               }
+            } else { // Sign up
+              console.log('Sign up with', socialUser.provider);
+              this.signUpForm.patchValue({
+                email: socialUser.email,
+                firstName: socialUser.firstName,
+                lastName: socialUser.lastName,
+                password: '',
+                passwordConfirm: '',
+                socialSignUp: true
+              })
+              this.signUp();
             }
           }
         }),
@@ -134,6 +133,7 @@ export class LogInComponent extends BaseComponent implements OnInit {
   public resetSignUpForm() {
     this.validations.confirmPassword = false;
     this.signUpForm.reset();
+    this.signUpForm.patchValue({ socialSignUp: false });
     this.cd.markForCheck();
   }
 
@@ -207,7 +207,8 @@ export class LogInComponent extends BaseComponent implements OnInit {
             lastName: formControl.lastName.value,
             password: formControl.password.value,
             passwordConfirm: formControl.passwordConfirm.value,
-            socialSignUp: false
+            socialSignUp: formControl.socialSignUp.value,
+            nickName: ''
           });
     this.spinnerState.dispatch(new OpenAction(''));
     this.usersServ.CreateUser(payload).pipe(
@@ -224,6 +225,7 @@ export class LogInComponent extends BaseComponent implements OnInit {
           alert(this.translateServ.instant('ALERT.SIGN_UP_SUCCESS'));
         } else {
           alert(this.translateServ.instant('ALERT.SOCIAL_SIGN_UP_SUCCESS'));
+          this.authStore.dispatch(new TokenLogInAction());
         }
         this.changePageState(0);
       })

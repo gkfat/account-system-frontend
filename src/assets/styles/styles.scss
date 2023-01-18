@@ -31,21 +31,13 @@ body {
   &-yellow {
     background-color: $mediumyellow;
     &:hover {
-      background-color: rgba($mediumyellow, 0.9);
+      filter: brightness(95%);
     }
   }
   &-green {
     background-color: $mediumgreen;
     &:hover {
-      background-color: rgba($mediumgreen, 0.9);
-    }
-  }
-  &-link {
-    &-blue {
-      color: $darkblue;
-      &:hover {
-        color: $mediumblue;
-      }
+      filter: brightness(95%);
     }
   }
 }
@@ -64,6 +56,9 @@ body {
   &-red {
     color: $red;
   }
+  &-yellow {
+    color: $mediumyellow;
+  }
 }
 
 // 選擇日期格式
@@ -79,10 +74,11 @@ body {
 
 // Icon 群組
 .icon {
-  width: 80%;
-  height: 80%;
+  width: 60%;
+  height: 60%;
   background-size: cover;
   background-position: center;
+  transition: 0.3s;
 
   &-container {
     width: 40px;
@@ -90,12 +86,20 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
     text-decoration: none;
-    margin: 0 auto;
-    &-lg {
-      width: 60px;
-      height: 60px;
+    transition: 0.3s;
+
+    // Absolute container
+    &-float {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+    }
+    &:hover {
+      filter: brightness(105%);
+      .icon-config {
+          transform: rotate(90deg);
+      }
     }
   }
   &-user {
@@ -103,9 +107,11 @@ body {
   }
   &-show-password {
     background-image: url(../images/show-password.png);
+    filter: invert(59%) sepia(7%) saturate(0%) hue-rotate(155deg) brightness(90%) contrast(98%);
   }
   &-hide-password {
     background-image: url(../images/hide-password.png);
+    filter: invert(59%) sepia(7%) saturate(0%) hue-rotate(155deg) brightness(90%) contrast(98%);
   }
   &-github {
     &-dark {
@@ -117,6 +123,23 @@ body {
   }
   &-edit {
     background-image: url(../images/edit.png);
+  }
+  &-config {
+    background-image: url(../images/config.png);
+  }
+}
+
+// Flex 群組
+.flex-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  &-nowarp {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
   }
 }
 

@@ -1,0 +1,77 @@
+<div class="timeline-page container-fluid" *ngIf="user">
+  <div class="timeline-block col-sm-8 mx-auto">
+    <button type="button" class="btn mb-3 btn-lg w-100 btn-yellow text-white" *ngIf="isUserSelf" (click)="openModal()">
+      {{ 'TIMELINE.CREATE_POST' | translate }}
+    </button>
+
+    <div class="mb-3">
+      <span class="me-2">{{ 'TIMELINE.TOTAL_POSTS' | translate }}</span>
+      <span class="text-muted">{{ postsData?.count }}</span>
+    </div>
+    <ng-container *ngFor="let post of postsData?.data">
+      <div class="post-container">
+        <app-post [post]="post"></app-post>
+        <div type="button" class="icon-container icon-container-float shadow-sm rounded" *ngIf="isUserSelf" (click)="openModal(post)">
+          <div class="icon icon-edit"></div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+
+<!-- 發佈新文章 Modal -->
+<ng-template #modal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      {{ 'TIMELINE.CREATE_POST' | translate }}
+    </h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.close()"></button>
+  </div>
+  <div class="modal-body">
+    <form class="flex-form-group" [formGroup]="postForm">
+      <!-- Title -->
+      <div class="w-100">
+        <label class="text-mediumgray mb-1">
+          {{ 'TIMELINE.POST_TITLE' | translate }}
+        </label>
+        <input matInput class="form-control" type="search" autocomplete="off" formControlName="title"
+            [class]="{ 'input-error': getFormControl().title.errors }"
+            placeholder="{{ 'PLACEHOLDER.ENTER_TITLE' | translate }}">
+        <small class="text-red" *ngIf="getFormControl().title.hasError('required')">
+            {{ 'WARNING.FIELD_REQUIRED' | translate }}
+        </small>
+      </div>
+      <!-- Admin: Category -->
+      <div class="w-100 mb-1">
+        <label class="text-mediumgray mb-1">
+          {{ 'TIMELINE.CATEGORY.TITLE' | translate }}
+        </label>
+        <select class="form-control" formControlName="categoryId">
+          <option *ngFor="let categoryId of categoryIdSelection" [ngValue]="categoryId">
+            {{ 'TIMELINE.CATEGORY.' + categoryId | translate }}
+          </option>
+        </select>
+      </div>
+      <!-- Content -->
+      <div class="w-100">
+          <angular-editor formControlName="content" [config]="editorConfig"></angular-editor>
+          <small class="text-red" *ngIf="getFormControl().content.hasError('required')">
+              {{ 'WARNING.FIELD_REQUIRED' | translate }}
+          </small>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <ng-container *ngIf="getFormControl().id.value === 0">
+      <button type="button" class="btn btn-lg mt-3 text-white w-100 btn-yellow" (click)="createPost()">
+        {{ 'MODEL.PUBLISH' | translate }}
+      </button>
+    </ng-container>
+    <ng-container *ngIf="getFormControl().id.value !== 0">
+      <button type="button" class="btn btn-lg mt-3 text-white w-100 btn-yellow" (click)="updatePost()">
+        {{ 'MODEL.PUBLISH' | translate }}
+      </button>
+    </ng-container>
+  </div>
+</ng-template>

@@ -1,10 +1,12 @@
 @import 'src/assets/styles/styles';
 
 .layout {
-    height: calc(100vh - 56px);
+    height: calc(100vh);
     display: flex;
     flex-direction: column;
     &-inner {
+        overflow-y: scroll;
+        padding-top: 60px;
         flex-grow: 1;
     }
 }

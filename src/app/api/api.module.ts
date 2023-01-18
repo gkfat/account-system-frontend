@@ -1,7 +1,9 @@
+import { PostsService } from './posts.service';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { UsersService } from './users.service';
 import { ErrorHandlerService } from './error-handler.service';
+import { DecoratorsService } from './decorators.service';
 
 @NgModule({
   imports: [
@@ -9,6 +11,8 @@ import { ErrorHandlerService } from './error-handler.service';
   ],
   providers: [
     UsersService,
+    PostsService,
+    DecoratorsService,
     ErrorHandlerService
   ]
 })

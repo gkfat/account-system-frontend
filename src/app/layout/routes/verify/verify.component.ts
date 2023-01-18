@@ -75,7 +75,7 @@ export class VerifyComponent extends BaseComponent implements OnInit {
       email: this.getFormControl().email.value
     })
     this.spinnerState.dispatch(new OpenAction(''));
-    this.usersServ.resendVerify(payload).pipe(
+    this.usersServ.ResendVerify(payload).pipe(
       takeUntil(this.unsubscribe$),
       catchError(err => {
         this.errServ.HttpErrorHandle(err);
@@ -98,7 +98,7 @@ export class VerifyComponent extends BaseComponent implements OnInit {
       verificationCode: params['verificationCode']
     });
     this.spinnerState.dispatch(new OpenAction('Verifying...'));
-    this.usersServ.verify(payload).pipe(
+    this.usersServ.Verify(payload).pipe(
       takeUntil(this.unsubscribe$),
       catchError(err => {
         this.errServ.HttpErrorHandle(err);

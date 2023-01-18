@@ -7,7 +7,6 @@ import { AuthState, INITIAL_AUTH_STATE } from './auth.state';
 export function authReducer(state: AuthState = INITIAL_AUTH_STATE, action: Action): AuthState {
   switch (action.type) {
     case auth.LOG_IN_SUCCESS:
-    case auth.TOKEN_LOG_IN:
       const { user, accessToken } = action as auth.LogInSuccessAction;
       return {
         user: user,
@@ -19,6 +18,7 @@ export function authReducer(state: AuthState = INITIAL_AUTH_STATE, action: Actio
         accessToken: null,
         user: null
       }
+    case auth.TOKEN_LOG_IN:
     case auth.LOG_IN:
     default:
       return state;

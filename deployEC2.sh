@@ -6,11 +6,11 @@ NC='\033[0m'
 TODAY=$(date +"%Y%m%d")
 CURRENT_COMMIT=`git rev-parse HEAD`
 
-PROJECTPATH="/Users/gk/account-system-frontend"
+PROJECTPATH="/Users/gk/gk-playground-frontend"
 REMOTE_USER="ec2-user"
 REMOTE_SERVER="ec2-3-140-103-253.us-east-2.compute.amazonaws.com"
 CERT_KEY="/Users/gk/certs/sideProjectEC2.pem"
-REMOTE_BIN="/var/www/html/account-system-frontend"
+REMOTE_BIN="/var/www/html/gk-playground-frontend"
 
 echo "Start Deployment: $TODAY"
 echo "Remote BIN Location: $REMOTE_BIN"

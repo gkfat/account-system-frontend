@@ -1,7 +1,10 @@
-<nav class="navbar navbar-expand-md navbar-light bg-light">
+<nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
     <div class="container-fluid">
     
-        <a class="navbar-brand" routerLink="/log-in">Account System</a>
+        <a class="navbar-brand" routerLink="/news">
+            {{ 'TITLE' | translate }}
+        </a>
+
         <button class="navbar-toggler" type="button" (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -10,10 +13,15 @@
             <!-- MENU -->
             <ul class="navbar-nav flex-grow-1">
                 <li class="nav-item">
-                    <a class="nav-link" role="button" routerLink="/dashboard">
-                        {{ 'MENU.DASHBOARD' | translate }}
+                    <a class="nav-link" role="button" routerLink="/news">
+                        {{ 'MENU.NEWS' | translate }}
                     </a>
                 </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" role="button" routerLink="/gkbot-survival">
+                        {{ 'MENU.GKBOT_SURVIVAL' | translate }}
+                    </a>
+                </li> -->
                 <!-- 多語系 -->
                 <li class="nav-item dropdown" ngbDropdown>
                     <a class="nav-link dropdown-toggle" type="button" ngbDropdownToggle>
@@ -40,12 +48,25 @@
                 <!-- 已登入 -->
                 <ng-container *ngIf="user">
                     <!-- User Icon -->
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="/profile">
+                    <!-- <li class="nav-item" ngbDropdown>
+                        <a type="button" class="nav-link flex-group-nowarp" ngbDropdownToggle>
                             <div class="icon-container">
                                 <div class="icon icon-user"></div>
                             </div>
                         </a>
+                        <ul class="dropdown-menu" ngbDropdownMenu>
+                            <a class="dropdown-item" type="button" routerLink="/user/profile">
+                                {{ 'MENU.PROFILE' | translate }}
+                            </a>
+                            <a class="dropdown-item" type="button" routerLink="/user/timeline">
+                                {{ 'MENU.TIMELINE' | translate }}
+                            </a>
+                        </ul>
+                    </li> -->
+                    <li class="nav-item">
+                        <div class="icon-container" type="button" (click)="navigateTo('/user/timeline', { id: user.id })">
+                            <div class="icon icon-user"></div>
+                        </div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link">

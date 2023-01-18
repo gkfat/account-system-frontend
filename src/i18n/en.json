@@ -1,17 +1,28 @@
 {
-    "TITLE": "Account System",
+    "TITLE": "GK's Playground",
     "MENU": {
-        "HOME": "Home",
-        "DASHBOARD": "Dashboard"
+        "NEWS": "NEWS",
+        "GKBOT_SURVIVAL": "GKBOT Survival",
+        "PROFILE": "Profile",
+        "TIMELINE": "Timeline"
     },
-    "DASHBOARD": {
-        "TITLE": "Dashboard",
+    "NEWS": {
+        "TITLE": "News",
         "TOTAL_USERS": "Total users",
-        "ACTIVE_USERS_TODAY": "Active users today",
-        "ACTIVE_USERS_LAST_7_DAYS": "Active users last 7 days",
         "SIGNED_UP_TIME": "Signed up time",
         "LOGGED_IN_TIMES": "Logged in times",
-        "LAST_LOGGED_IN": "Last logged in"
+        "MAINTAIN": "Data management"
+    },
+    "DECORATOR": {
+        "CATEGORY": {
+            "TITLE": "Category",
+            "0": "Avatar",
+            "1": "Frame"
+        },
+        "LEVEL_LIMIT": "Limit level",
+        "NAME": "Name",
+        "UPLOAD": "Upload decorators",
+        "USERS": "Users"
     },
     "USER": {
         "PROFILE": "Profile",
@@ -20,7 +31,34 @@
         "CONTINUE_WITH_FACEBOOK": "Continue with Facebook",
         "LOG_OUT": "Log out",
         "EMAIL": "Email",
-        "PASSWORD": "Password"
+        "PASSWORD": "Password",
+        "FIRST_NAME": "First name",
+        "LAST_NAME": "Last name",
+        "NICK_NAME": "Nick name",
+        "AVATAR": "Avatar",
+        "FRAME": "Frame",
+        "REQUIRE_LEVEL": "Level up to unlock.",
+        "ROLE_LEVEL": {
+            "TITLE": "Role level",
+            "0": "Member",
+            "1": "Administrator"
+        }
+    },
+    "PROFILE": {
+        "TITLE": "Profile"
+    },
+    "TIMELINE": {
+        "TITLE": "Timeline",
+        "CREATE_POST": "Create post",
+        "POST_TITLE": "Title",
+        "TOTAL_POSTS": "Total posts",
+        "AUTHOR": "Author",
+        "NO_NICKNAME": "Anonymous Hero",
+        "CATEGORY": {
+            "TITLE": "Category",
+            "0": "Post",
+            "1": "News"
+        }
     },
     "VERIFY": {
         "RESEND": "Resend Verification",
@@ -34,10 +72,14 @@
         "ENTER": "Enter",
         "TEXT": "text",
         "SUBMIT": "Submit",
+        "SELECT": "Select",
         "CANCEL": "Cancel",
         "CHANGE": "Change",
         "RESET": "Reset",
-        "CONFIRM": "Confirm"
+        "CONFIRM": "Confirm",
+        "PUBLISH": "Publish",
+        "CREATED_AT": "Created at",
+        "UPDATED_AT": "Updated at"
     },
     "PLACEHOLDER": {
         "ENTER_EMAIL": "Enter email.",
@@ -48,11 +90,14 @@
         "SELECT_BIRTHDATE": "Select birthdate.",
         "ENTER_PHONENUMBER": "Enter phone number.",
         "ENTER_FIRSTNAME": "Enter first name.",
-        "ENTER_LASTNAME": "Enter last name."
+        "ENTER_LASTNAME": "Enter last name.",
+        "ENTER_NICKNAME": "Enter nickname.",
+        "ENTER_TITLE": "Enter title.",
+        "ENTER_CONTENT": "Enter content."
     },
     "WARNING": {
         "INVALID_EMAIL_FORMAT": "* Invalid email format.",
-        "INVALID_PASSWORD_FORMAT": "* Password must contains at least one lower character, one upper character, one digit character, one special character",
+        "INVALID_PASSWORD_FORMAT": "* Password must contains at least one character, one digit character and at least 8 characters.",
         "FIELD_REQUIRED": "* Field required.",
         "SAME_WITH_OLD_PASSWORD": "* Must not be same as old password",
         "NOT_SAME_WITH_NEW_PASSWORD": "* New password reapeated incorrectly"
@@ -66,6 +111,13 @@
         "UNKNOWN_ERROR": "Unknown error.",
         "EMAIL_BE_USED": "Email already be used.",
         "ACCOUNT_NOT_SIGN_UP": "Email not registerd.",
-        "PASSWORD_INCORRECT": "Incorrect password."
+        "PASSWORD_INCORRECT": "Incorrect password.",
+        "PUBLISH_POST_SUCCESS": "Your post has successfully been publish!",
+        "UPLOAD_SUCCESS": "Successfully uploaded!",
+        "UPDATE_SUCCESS": "Successfully updated!",
+        "DELETE_SUCCESS": "Successfully deleted!"
+    },
+    "CONFIRM": {
+        "DELETE_DECORATOR": "Confirm delete decorator?"
     }
 }

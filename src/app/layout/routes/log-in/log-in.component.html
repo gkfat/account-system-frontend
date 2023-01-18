@@ -1,4 +1,4 @@
-<div class="login-page container-fluid">
+<div class="login-page py-5 container-fluid">
 
   <div class="login-modal bg-light shadow">
     <h3 class="h3 text-center mb-5">{{ 'TITLE' | translate }}</h3>
@@ -126,7 +126,7 @@
         </button>
 
         <!-- Social sign up buttons -->
-        <div class="social-buttons d-flex justify-content-between flex-wrap align-items-center">
+        <div class="flex-form-group">
           <!-- <cool-google-button color="light" (click)="logInGoogle()">
             {{ 'USER.LOG_IN_GOOGLE' | translate }}
           </cool-google-button> -->
@@ -137,23 +137,17 @@
           </cool-facebook-button>
   
           <!-- Google -->
-          <asl-google-signin-button
-            type="standard"
-            text="signup_with"
-            size="medium">
-          </asl-google-signin-button>
+          <asl-google-signin-button type="standard" text="signup_with" size="medium"></asl-google-signin-button>
         </div>
       </ng-container>
     </div>
 
     <!-- Footer -->
-    <div class="d-flex justify-content-between">
-      <p type="button" class="btn btn-link-blue w-100 text-center m-0 p-0 text-decoration-none"
-          *ngIf="pageState !== 0" (click)="changePageState(0)">
+    <div class="flex-group justify-content-between">
+      <p type="button" class="link-primary m-0" (click)="changePageState(0)">
           {{ 'MODEL.GO' | translate }}{{ 'USER.LOG_IN' | translate }}
       </p>
-      <p type="button" class="btn btn-link-blue w-100 text-center m-0 p-0 text-decoration-none"
-          *ngIf="pageState !== 1" (click)="changePageState(1)">
+      <p type="button" class="link-primary m-0" (click)="changePageState(1)">
           {{ 'MODEL.GO' | translate }}{{ 'USER.SIGN_UP' | translate }}
       </p>
     </div>

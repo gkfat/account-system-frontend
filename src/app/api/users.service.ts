@@ -19,7 +19,7 @@ export class UsersService {
 
   // Log in
   public LogIn(payload: Users.LogIn): Observable<APIResponse.General<APIResponse.LogIn>> {
-    const url = ApiRoute.users.sessions;
+    const url = ApiRoute.sessions.logIn;
     return this.http.post<any>(url, payload);
   }
 
@@ -36,32 +36,32 @@ export class UsersService {
   }
 
   // Me
-  public me(): Observable<APIResponse.General<APIResponse.Me>> {
+  public Me(): Observable<APIResponse.General<APIResponse.Me>> {
     const url = ApiRoute.users.me;
     return this.http.get<any>(url);
   }
 
   // Verify
-  public verify(payload: Users.Verify): Observable<APIResponse.General<APIResponse.Verify>> {
+  public Verify(payload: Users.Verify): Observable<APIResponse.General<APIResponse.Verify>> {
     const url = `${ApiRoute.users.verify}/${payload.id}/${payload.verificationCode}`;
     return this.http.get<any>(url);
   }
 
   // Resend Verify
-  public resendVerify(payload: Users.ResendVerify): Observable<APIResponse.General<APIResponse.Verify>> {
+  public ResendVerify(payload: Users.ResendVerify): Observable<APIResponse.General<APIResponse.Verify>> {
     const url = ApiRoute.users.resendVerify;
     return this.http.post<any>(url, payload);
   }
 
   // Update user data
-  public UpdateData(payload: Users.UpdateData): Observable<APIResponse.General<APIResponse.UpdateData>> {
+  public UpdateUser(payload: Users.UpdateUser): Observable<APIResponse.General<APIResponse.UpdateUser>> {
     const url = ApiRoute.users.me;
     return this.http.put<any>(url, payload);
   }
 
   // Log out
   public LogOut(): Observable<any> {
-    const url = ApiRoute.users.logOut;
+    const url = ApiRoute.sessions.logOut;
     return this.http.get<any>(url);
   }
 

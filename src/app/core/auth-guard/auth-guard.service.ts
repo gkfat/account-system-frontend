@@ -1,4 +1,3 @@
-import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot, CanActivate,
@@ -6,24 +5,26 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import { AuthState } from 'src/app/store/auth';
+import { AuthState, selectState } from 'src/app/store/auth';
 import { Store } from '@ngrx/store';
 
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild {
-  private tokenKey: string = environment.cookieKeys.token;
+  private auth$ = this.authStore.select(selectState);
+  public authState: AuthState | null = null;
 
   constructor(
     private router: Router,
     private authStore: Store<AuthState>,
-  ) { }
+  ) {
+    this.auth$.subscribe(state => this.authState = state);
+  }
 
   public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     let result: boolean = false;
 
-    // 若 storage 有 token 就可進入，若沒有就導去登入頁
-    let token = localStorage.getItem(this.tokenKey) || null;
-    if ( token ) {
+    // AuthState 有 user 就可通過
+    if ( this.authState && this.authState.user ) {
       result = true;
     } else {
       this.router.navigate(['/log-in']);

@@ -1,0 +1,42 @@
+<div class="card mb-3">
+  <div class="card-header flex-group-nowarp justify-content-between">
+    <!-- Category -->
+    <div>
+      <span [class]="'btn btn-sm btn-' + (post.categoryId === 1 ? 'primary' : 'secondary')">
+        {{ 'TIMELINE.CATEGORY.' + post.categoryId | translate }}
+      </span>
+    </div>
+    <!-- Author -->
+    <div class="me-4">
+      <small class="text-muted me-2">By</small>
+      <small type="button" class="link-primary" (click)="navigateTo('/user/timeline', { id: post.author.id })">
+        <ng-container *ngIf="!post.author.nickName || post.author.nickName === ''">
+          {{ 'TIMELINE.NO_NICKNAME' | translate }}
+        </ng-container>
+        <ng-container else>
+          {{ post.author.nickName }}
+        </ng-container>
+      </small>
+    </div>
+  </div>
+  <div class="card-body">
+    <!-- Posted time -->
+    <div class="mb-3">
+      <small class="text-muted me-2">
+        {{ 'MODEL.CREATED_AT' | translate }}
+      </small>
+      <small class="text-primary me-2">
+        {{ post.createdAt | date: 'YYYY-MM-dd HH:mm' }}
+      </small>
+      <small class="text-muted me-2">
+        {{ 'MODEL.UPDATED_AT' | translate }}
+      </small>
+      <small class="text-primary">
+        {{ post.updatedAt | date: 'YYYY-MM-dd HH:mm' }}
+      </small>
+    </div>
+    <!-- Content -->
+    <h4 class="card-title text-yellow mb-3">{{ post.title }}</h4>
+    <div class="card-text" [innerHTML]="post.content"></div>
+  </div>
+</div>

@@ -9,13 +9,18 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'log-in', pathMatch: 'full' },
       {
-        path: 'dashboard',
-        loadChildren: () => import('src/app/layout/routes/dashboard/dashboard.module').then(m => m.DashboardModule)
+        path: 'news',
+        loadChildren: () => import('src/app/layout/routes/news/news.module').then(m => m.NewsModule)
       },
       {
-        path: 'profile',
+        path: 'user',
         canActivateChild: [AuthGuard],
-        loadChildren: () => import('src/app/layout/routes/profile/profile.module').then(m => m.ProfileModule)
+        loadChildren: () => import('src/app/layout/routes/user/user.module').then(m => m.UserModule)
+      },
+      {
+        path: 'gkbot-survival',
+        canActivateChild: [AuthGuard],
+        loadChildren: () => import('src/app/layout/routes/gkbot-survival/gkbot-survival.module').then(m => m.GkbotSurvivalModule)
       },
       {
         path: 'log-in',

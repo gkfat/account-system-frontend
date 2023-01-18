@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-  private tokenKey: string = environment.cookieKeys.token;
+  private tokenKey: string = environment.storageTokenKey;
 
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let token = localStorage.getItem(this.tokenKey) || null,

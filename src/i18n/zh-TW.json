@@ -1,16 +1,28 @@
 {
-    "TITLE": "會員系統",
+    "TITLE": "GK's Playground",
     "MENU": {
-        "DASHBOARD": "主控版"
+        "NEWS": "公告",
+        "GKBOT_SURVIVAL": "GKBOT 生存之戰",
+        "PROFILE": "個人資訊",
+        "TIMELINE": "動態牆"
     },
-    "DASHBOARD": {
-        "TITLE": "主控版",
-        "TOTAL_USERS": "所有註冊使用者數",
-        "ACTIVE_USERS_TODAY": "今日活躍使用者數",
-        "ACTIVE_USERS_LAST_7_DAYS": "過去 7 天活躍使用者數",
+    "NEWS": {
+        "TITLE": "公告",
+        "TOTAL_USERS": "所有使用者",
         "SIGNED_UP_TIME": "註冊時間",
-        "LOGGED_IN_TIMES": "登入次數",
-        "LAST_LOGGED_IN": "上次登入"
+        "LAST_LOGGED_IN": "上次登入",
+        "MAINTAIN": "資料維護"
+    },
+    "DECORATOR": {
+        "CATEGORY": {
+            "TITLE": "類別",
+            "0": "頭像",
+            "1": "邊框"
+        },
+        "LEVEL_LIMIT": "等級限制",
+        "NAME": "名稱",
+        "UPLOAD": "上傳裝飾",
+        "USERS": "使用人數"
     },
     "USER": {
         "PROFILE": "個人資訊",
@@ -19,7 +31,34 @@
         "CONTINUE_WITH_FACEBOOK": "使用 Facebook 帳戶繼續",
         "LOG_OUT": "登出",
         "EMAIL": "信箱",
-        "PASSWORD": "密碼"
+        "PASSWORD": "密碼",
+        "FIRST_NAME": "名字",
+        "LAST_NAME": "姓氏",
+        "NICK_NAME": "暱稱",
+        "AVATAR": "頭像",
+        "FRAME": "邊框",
+        "REQUIRE_LEVEL": "升級以解鎖。",
+        "ROLE_LEVEL": {
+            "TITLE": "權限",
+            "0": "一般會員",
+            "1": "管理員"
+        }
+    },
+    "PROFILE": {
+        "TITLE": "個人資訊"
+    },
+    "TIMELINE": {
+        "TITLE": "動態牆",
+        "CREATE_POST": "發佈文章",
+        "POST_TITLE": "標題",
+        "TOTAL_POSTS": "總文章數",
+        "AUTHOR": "作者",
+        "NO_NICKNAME": "匿名勇者",
+        "CATEGORY": {
+            "TITLE": "類別",
+            "0": "貼文",
+            "1": "公告"
+        }
     },
     "VERIFY": {
         "RESEND": "重發驗證信",
@@ -33,10 +72,14 @@
         "ENTER": "輸入",
         "TEXT": "文字",
         "SUBMIT": "送出",
+        "SELECT": "選擇",
         "CANCEL": "取消",
         "CHANGE": "變更",
         "RESET": "重置",
-        "CONFIRM": "確認"
+        "CONFIRM": "確認",
+        "PUBLISH": "發佈",
+        "CREATED_AT": "建立時間",
+        "UPDATED_AT": "更新時間"
     },
     "PLACEHOLDER": {
         "ENTER_EMAIL": "輸入信箱",
@@ -47,11 +90,14 @@
         "SELECT_BIRTHDATE": "選擇生日",
         "ENTER_PHONENUMBER": "輸入聯絡電話",
         "ENTER_FIRSTNAME": "輸入名字",
-        "ENTER_LASTNAME": "輸入姓氏"
+        "ENTER_LASTNAME": "輸入姓氏",
+        "ENTER_NICKNAME": "輸入暱稱",
+        "ENTER_TITLE": "輸入標題",
+        "ENTER_CONTENT": "輸入文章內容"
     },
     "WARNING": {
         "INVALID_EMAIL_FORMAT": "* 信箱格式錯誤",
-        "INVALID_PASSWORD_FORMAT": "* 密碼格式錯誤，須為至少 8 個字元，至少包含 1 個小寫英文、1 個大寫英文、1 個數字及 1 個特殊字元",
+        "INVALID_PASSWORD_FORMAT": "* 密碼格式錯誤，須為至少 8 個字元，至少包含 1 個英文與 1 個數字",
         "FIELD_REQUIRED": "* 此為必填欄位",
         "SAME_WITH_OLD_PASSWORD": "* 新舊密碼不可相同",
         "NOT_SAME_WITH_NEW_PASSWORD": "* 兩次新密碼不相同"
@@ -65,6 +111,13 @@
         "UNKNOWN_ERROR": "發生不知名錯誤，請重新嘗試",
         "EMAIL_BE_USED": "Email 已被使用，請重新嘗試",
         "ACCOUNT_NOT_SIGN_UP": "查無此帳號，請確認 Email 輸入正確",
-        "PASSWORD_INCORRECT": "密碼輸入錯誤"
+        "PASSWORD_INCORRECT": "密碼輸入錯誤",
+        "PUBLISH_POST_SUCCESS": "文章已發佈！",
+        "UPLOAD_SUCCESS": "上傳成功！",
+        "UPDATE_SUCCESS": "更新成功！",
+        "DELETE_SUCCESS": "刪除成功！"
+    },
+    "CONFIRM": {
+        "DELETE_DECORATOR": "是否確定刪除裝飾？"
     }
 }

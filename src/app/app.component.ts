@@ -1,4 +1,4 @@
-import { takeUntil, tap } from 'rxjs/operators';
+import { takeUntil, tap, switchMap } from 'rxjs/operators';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from './components/base.component';
@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AuthState, selectState, TokenLogInAction } from 'src/app/store/auth';
 import { Store } from '@ngrx/store';
 import { environment } from 'src/environments/environment';
+import { Users } from './core/models';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,8 @@ import { environment } from 'src/environments/environment';
 })
 export class AppComponent extends BaseComponent implements OnInit {
   private auth$ = this.authStore.select(selectState);
-  public accessToken: string | null = null;
+  public user: Users.User | null = null;
+  private tokenKey: string = environment.storageTokenKey;
 
   constructor(
     private translateServ: TranslateService,
@@ -23,6 +25,7 @@ export class AppComponent extends BaseComponent implements OnInit {
   ) { super(); }
 
   ngOnInit() {
+    this.authStore.dispatch(new TokenLogInAction());
     this.setTranslate();
     this.authListener();
   }
@@ -35,17 +38,19 @@ export class AppComponent extends BaseComponent implements OnInit {
 
   // 監聽登入
   private authListener() {
-    this.auth$.subscribe(state => this.accessToken = state.accessToken);
-    this.socialAuthServ.initState.pipe(
+    this.auth$.pipe(
       takeUntil(this.unsubscribe$),
       tap(state => {
-        // Check if stored accessToken
-        if ( state ) {
-          const accessToken = localStorage.getItem(environment.cookieKeys.token) || null;
-          if ( accessToken ) {
-            console.log('Token log in');
-            this.authStore.dispatch(new TokenLogInAction());
-          }
+        this.user = state.user;
+        console.log('user:', this.user);
+      }),
+      switchMap(() => this.socialAuthServ.initState),
+      switchMap(() => this.socialAuthServ.authState),
+      tap(socialUser => {
+        // If socialUser = true and no loggedIn user and stored accessToken, then do token login
+        let accessToken = localStorage.getItem(this.tokenKey);
+        if ( socialUser && !this.user && accessToken ) {
+          this.authStore.dispatch(new TokenLogInAction());
         }
       }),
     ).subscribe();

@@ -14,12 +14,12 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
+  selector: 'app-gkbot-survival',
+  templateUrl: './gkbot-survival.component.html',
+  styleUrls: ['./gkbot-survival.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashboardComponent extends BaseComponent implements OnInit {
+export class GkbotSurvivalComponent extends BaseComponent implements OnInit {
   public usersData: APIResponse.FetchUsers | null = null;
 
   constructor(
@@ -35,20 +35,10 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   ) { super(); }
 
   ngOnInit() {
-    this.authListener();
   }
 
   public formatTimestamp(ISODate: Date) {
     return new Date(ISODate).getTime();
-  }
-
-  public authListener() {
-    const token: string | null = localStorage.getItem(environment.cookieKeys.token);
-    if (!token) {
-      this.router.navigateByUrl('/verify');
-    } else {
-      this.fetchUsers();
-    }
   }
 
   // 查詢使用者資訊
@@ -73,18 +63,8 @@ export class DashboardComponent extends BaseComponent implements OnInit {
       map(res => res.data),
       tap(data => {
         this.usersData = {
-          users: {
-            data: data.users.data,
-            count: data.users.count
-          },
-          activeUsersToday: {
-            data: data.activeUsersToday.data,
-            count: data.activeUsersToday.count
-          },
-          averageUsersLast7Days: {
-            data: data.averageUsersLast7Days.data,
-            count: data.averageUsersLast7Days.count
-          }
+            data: data.data,
+            count: data.count
         };
         this.spinnerState.dispatch(new CloseAction());
         this.cd.markForCheck();

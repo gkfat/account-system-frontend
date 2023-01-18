@@ -1,4 +1,6 @@
 import { Users } from './users';
+import { Posts } from './posts';
+import { Decorators } from './decorators';
 
 export namespace APIResponse {
 
@@ -7,6 +9,9 @@ export namespace APIResponse {
     data!: T;
   }
 
+  /*
+  ** User
+  */
   export class Me extends Users.User {};
 
   export class CreateUser extends Users.User {};
@@ -15,7 +20,7 @@ export namespace APIResponse {
     verifyState: number = 0;
   };
   
-  export class UpdateData {
+  export class UpdateUser {
     accessToken: string = '';
   };
 
@@ -23,24 +28,28 @@ export namespace APIResponse {
     accessToken: string = '';
   }
 
-  export class FetchUser {
+  export class FetchUsers {
     data: Users.User[] = [];
     count: number = 0;
   }
 
-  export class FetchUsers {
-    users: FetchUser = {
-      data: [],
-      count: 0
-    }
-    activeUsersToday: FetchUser = {
-      data: [],
-      count: 0
-    }
-    averageUsersLast7Days: FetchUser = {
-      data: [],
-      count: 0
-    }
-  };
+  /*
+  ** Posts
+  */
+  export class CreatePost extends Posts.Post {}
+
+  export class FetchPosts {
+    data: Posts.Post[] = [];
+    count: number = 0;
+  }
+
+  /*
+  ** Decorators
+  */
+
+  export class FetchDecorators {
+    data: Decorators.Decorator[] = [];
+    count: number = 0;
+  }
 
 }

@@ -1,0 +1,92 @@
+@import 'src/assets/styles/styles';
+
+.user-info {
+  &-sm {
+    &.user-info-container {
+      width: 120px;
+    }
+    .user-info-header-group {
+      width: 80px;
+      height: 80px;
+    }
+    .user-info-name {
+      font-size: 1.1rem;
+    }
+  }
+  &-md {
+    &.user-info-container {
+      width: 300px;
+      @media screen and (max-width:600px) {
+        width: 100%;
+      }
+    }
+    .user-info-header-group {
+      width: 150px;
+      height: 150px;
+    }
+    .user-info-name {
+      font-size: 1.4rem;
+      padding: 1rem 2rem;
+    }
+  }
+  &-header-group {
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: $lightgray;
+  }
+  &-avatar {
+    width: 70%;
+    height: 70%;
+    border-radius: 50%;
+    overflow: hidden;
+    object-position: center;
+    object-fit: cover;
+  }
+  &-frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    object-position: center;
+    object-fit: cover;
+  }
+  &-name {
+    position: relative;
+  }
+}
+
+.decorators-select-container {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  img {
+    height: 100%;
+    width: 100%;
+  }
+  &.selected::after {
+    // Checkmark
+    content: '';
+    display: inline-block;
+    transform: rotate(45deg);
+    height: 20px;
+    width: 12px;
+    border-bottom: 8px solid $mediumblue;
+    border-right: 6px solid $mediumblue;
+    position: absolute;
+    top: -4px;
+    right: -4px;
+  }
+  &.disabled::after {
+    content: '';
+    position: absolute;
+    border-radius: 10%;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+}

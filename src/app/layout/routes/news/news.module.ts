@@ -1,27 +1,25 @@
-import { FormMaterialModule } from 'src/app/form-material.module';
+import { ComponentsModule } from 'src/app/components/components.module';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { SharedModule } from 'src/app/shared.module';
-import { DashboardComponent } from './dashboard.component';
+import { NewsComponent } from './news.component';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', component: DashboardComponent },
+  { path: '', component: NewsComponent },
 ]
 
 @NgModule({
   declarations: [
-    DashboardComponent
+    NewsComponent
   ],
   imports: [
-    NgbModule,
     SharedModule,
     PipesModule,
     CommonModule,
-    FormMaterialModule,
-    RouterModule.forChild(routes),
+    ComponentsModule,
+    RouterModule.forChild(routes)
   ]
 })
-export class DashboardModule { }
+export class NewsModule { }

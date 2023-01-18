@@ -14,7 +14,7 @@ import { CloseAction, OpenAction, SpinnerState } from 'src/app/store/spinner/ind
 
 @Injectable()
 export class AuthEffects {
-  private tokenKey: string = environment.cookieKeys.token;
+  private tokenKey: string = environment.storageTokenKey;
   private accessToken: string | null = null;
 
   constructor(
@@ -52,7 +52,7 @@ export class AuthEffects {
             localStorage.setItem(this.tokenKey, data.accessToken);
             this.accessToken = data.accessToken;
           }),
-          switchMap(() => this.usersServ.me()),
+          switchMap(() => this.usersServ.Me()),
           map(res => res.data),
           tap(data => this.spinnerState.dispatch(new CloseAction())),
           switchMap((user: Users.User) => {
@@ -70,8 +70,9 @@ export class AuthEffects {
     () => this.actions$.pipe(
       ofType<auth.TokenLogInAction>(auth.TOKEN_LOG_IN),
       switchMap(() => {
-        this.spinnerState.dispatch(new OpenAction('Token log in...'));
-        return this.usersServ.me().pipe(
+        console.log('Token log in');
+        this.spinnerState.dispatch(new OpenAction(''));
+        return this.usersServ.Me().pipe(
           catchError(err => {
             this.spinnerState.dispatch(new CloseAction());
             this.errServ.HttpErrorHandle(err);

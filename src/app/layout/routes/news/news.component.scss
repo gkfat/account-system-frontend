@@ -1,0 +1,18 @@
+@import 'src/assets/styles/styles';
+
+.news-page {
+    .user-info {
+        transition: 0.3s;
+        &:hover {
+            filter: brightness(95%);
+        }
+    }
+    .custom-drop-zone {
+        height: 120px;
+    }
+    .table-decorators {
+        .img-fluid {
+            max-height: 60px;
+        }
+    }
+}
