@@ -2,20 +2,21 @@
     <h2 class="text-center mb-3">{{ 'NEWS.TITLE' | translate }}</h2>
 
     <div class="col-sm-8 mx-auto">
-        <ul ngbNav #nav="ngbNav" class="nav-tabs mb-3">
+        <ul ngbNav #nav="ngbNav" class="nav-tabs mb-3" (navChange)="onNavChange($event)">
             <!-- 公告文章 -->
-            <li class="nav-item" ngbNavItem>
+            <li class="nav-item" [ngbNavItem]="1">
                 <a class="nav-link" ngbNavLink>
                     {{ 'NEWS.TITLE' | translate }}
                 </a>
                 <ng-template ngbNavContent>
                     <ng-container *ngFor="let post of postsData?.data">
-                        <app-post [post]="post"></app-post>
+                        <app-post [post]="post">
+                        </app-post>
                     </ng-container>
                 </ng-template>
             </li>
             <!-- 註冊的使用者 -->
-            <li class="nav-item" ngbNavItem *ngIf="user">
+            <li class="nav-item" [ngbNavItem]="2" *ngIf="user">
                 <a class="nav-link" ngbNavLink>
                     {{ 'NEWS.TOTAL_USERS' | translate }}
                 </a>
@@ -35,7 +36,7 @@
                 </ng-template>
             </li>
             <!-- 資料維護 -->
-            <li class="nav-item" ngbNavItem *ngIf="user && user.roleLevel === 1">
+            <li class="nav-item" [ngbNavItem]="3" *ngIf="user && user.roleLevel === 1">
                 <a class="nav-link" ngbNavLink>
                     {{ 'NEWS.MAINTAIN' | translate }}
                 </a>

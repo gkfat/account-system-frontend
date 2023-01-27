@@ -29,4 +29,10 @@ export class PostsService {
     return this.http.post<any>(url, payload);
   }
 
+  // Delete post
+  public DeletePost(payload: Posts.DeletePost): Observable<APIResponse.General<any>> {
+    const url = ApiRoute.posts.postsDelete;
+    return this.http.post<any>(url, payload);
+  }
+
 }

@@ -14,6 +14,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { PostsService } from 'src/app/api/posts.service';
 import { DecoratorsService } from 'src/app/api/decorators.service';
+import { NgbNavChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-news',
@@ -27,7 +28,6 @@ export class NewsComponent extends BaseComponent implements OnInit {
 
   public postsData: APIResponse.FetchPosts | null = null;
   public usersData: APIResponse.FetchUsers | null = null;
-
   public decoratorsData: APIResponse.FetchDecorators | null = null;
 
   // File upload
@@ -60,9 +60,49 @@ export class NewsComponent extends BaseComponent implements OnInit {
       tap(state => {
         if ( state.user ) {
           this.user = state.user;
+        }
+      })
+    ).subscribe();
+  }
+
+  public onNavChange(changeEvent: NgbNavChangeEvent) {
+    switch ( changeEvent.nextId ) {
+      case 1:
+        if ( !this.postsData ) {
+          this.fetchPosts();
+        }
+        break;
+      case 2:
+        if ( !this.usersData ) {
           this.fetchUsers();
+        }
+        break;
+      case 3:
+        if ( !this.decoratorsData ) {
           this.fetchDecorators();
         }
+        break;
+      default:
+        break;
+    }
+  }
+
+  public fetchPosts() {
+    const payload = new Posts.FetchPosts();
+    payload.categoryIds.push(1);
+    this.postsServ.FetchPosts(payload).pipe(
+      takeUntil(this.unsubscribe$),
+      catchError(err => {
+        this.errServ.HttpErrorHandle(err);
+        return of();
+      }),
+      map(res => res.data),
+      tap(data => {
+        this.postsData = {
+            data: data.data,
+            count: data.count
+        };
+        this.cd.markForCheck();
       })
     ).subscribe();
   }
@@ -87,16 +127,7 @@ export class NewsComponent extends BaseComponent implements OnInit {
   }
 
   public fetchDecorators() {
-    const payload = new Decorators.FetchDecorators({
-            ids: [],
-            categoryIds: [],
-            page: 0,
-            take: 100,
-            order: {
-              by: 'id',
-              order: 1
-            }
-          })
+    const payload = new Decorators.FetchDecorators();
     this.decoratorsServ.FetchDecorators(payload).pipe(
       takeUntil(this.unsubscribe$),
       catchError(err => {
@@ -109,35 +140,6 @@ export class NewsComponent extends BaseComponent implements OnInit {
           data: data.data,
           count: data.count
         }
-        this.cd.markForCheck();
-      })
-    ).subscribe();
-  }
-
-  public fetchPosts() {
-    const payload = new Posts.FetchPosts({
-            ids: [],
-            authorIds: [],
-            categoryIds: [1],
-            page: 0,
-            take: 100,
-            order: {
-              by: 'id',
-              order: -1
-            }
-          })
-    this.postsServ.FetchPosts(payload).pipe(
-      takeUntil(this.unsubscribe$),
-      catchError(err => {
-        this.errServ.HttpErrorHandle(err);
-        return of();
-      }),
-      map(res => res.data),
-      tap(data => {
-        this.postsData = {
-            data: data.data,
-            count: data.count
-        };
         this.cd.markForCheck();
       })
     ).subscribe();

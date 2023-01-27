@@ -25,7 +25,10 @@ export class AppComponent extends BaseComponent implements OnInit {
   ) { super(); }
 
   ngOnInit() {
-    this.authStore.dispatch(new TokenLogInAction());
+    const accessToken = localStorage.getItem(this.tokenKey);
+    if ( accessToken ) {
+      this.authStore.dispatch(new TokenLogInAction());
+    }
     this.setTranslate();
     this.authListener();
   }
@@ -47,7 +50,6 @@ export class AppComponent extends BaseComponent implements OnInit {
       switchMap(() => this.socialAuthServ.initState),
       switchMap(() => this.socialAuthServ.authState),
       tap(socialUser => {
-        // If socialUser = true and no loggedIn user and stored accessToken, then do token login
         let accessToken = localStorage.getItem(this.tokenKey);
         if ( socialUser && !this.user && accessToken ) {
           this.authStore.dispatch(new TokenLogInAction());

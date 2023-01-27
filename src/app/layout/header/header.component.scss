@@ -25,4 +25,9 @@
             text-align: center;
         }
     }
+    .icon-container-user {
+        @media screen and (max-width:768px) {
+            margin: 0 auto;
+        }
+    }
 }

@@ -29,8 +29,8 @@
                   [class]="{ 'input-error': getLogInFormControl().password.errors }"
                   placeholder="{{ 'PLACEHOLDER.ENTER_PASSWORD' | translate }}">
               <div class="toggle-password icon-container" type="button" (click)="toggleShowPassword()">
-                  <div *ngIf="!showPassword" class="icon icon-show-password"></div>
-                  <div *ngIf="showPassword" class="icon icon-hide-password"></div>
+                  <i *ngIf="!showPassword" class="icon icon-show-password"></i>
+                  <i *ngIf="showPassword" class="icon icon-hide-password"></i>
               </div>
             </div>
             <small class="text-red" *ngIf="getLogInFormControl().password.hasError('required')">

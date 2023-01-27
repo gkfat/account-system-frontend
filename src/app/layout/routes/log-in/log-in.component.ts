@@ -24,7 +24,7 @@ export class LogInComponent extends BaseComponent implements OnInit {
   @ViewChild('googleLoginButton', { read: ElementRef }) googleLoginButton!: ElementRef;
 
   private auth$ = this.authStore.select(selectState);
-  public logIning: boolean = false;
+  public user: Users.User | null = null;
 
   // 0: log in, 1: sign up
   public pageState: number = 0;
@@ -70,6 +70,7 @@ export class LogInComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     this.changePageState(0);
     this.authListener();
+    this.socialAuthListener();
     this.signUpForm.valueChanges.pipe(
       tap(() => this.passwordValidator())
     ).subscribe();
@@ -78,8 +79,7 @@ export class LogInComponent extends BaseComponent implements OnInit {
   // 變更登入／註冊
   public changePageState(state: number) {
     this.pageState = state;
-    this.resetLogInForm();
-    this.resetSignUpForm();
+    state === 0 ? this.resetLogInForm() : this.resetSignUpForm();
   }
 
   // 監聽登入
@@ -88,24 +88,25 @@ export class LogInComponent extends BaseComponent implements OnInit {
       takeUntil(this.unsubscribe$),
       tap(state => {
         if ( state.user ) {
+          this.user = state.user;
           this.router.navigate(['/user/timeline'], { queryParams: { id: state.user.id } });
         }
-        this.resetSignUpForm();
-        this.logIning = false;
       }),
-      switchMap(() => this.socialAuthServ.initState),
+    ).subscribe();
+  }
+
+  // Social 監聽
+  public socialAuthListener() {
+    this.socialAuthServ.initState.pipe(
       switchMap(() => this.socialAuthServ.authState),
       tap(socialUser => {
-        // Listen social login or sign up
-        if ( socialUser ) {
+        if ( socialUser && !this.user ) {
             if ( this.pageState === 0 ) { // Log in
-              if ( !this.logIning ) {
-                console.log('Log in with', socialUser.provider);
-                const payload = new Users.LogIn();
-                payload.email = socialUser.email;
-                payload.socialLogin = true;
-                this.authStore.dispatch(new LogInAction(payload));
-              }
+              console.log('Log in with', socialUser.provider);
+              const payload = new Users.LogIn();
+              payload.email = socialUser.email;
+              payload.socialLogin = true;
+              this.authStore.dispatch(new LogInAction(payload));
             } else { // Sign up
               console.log('Sign up with', socialUser.provider);
               this.signUpForm.patchValue({

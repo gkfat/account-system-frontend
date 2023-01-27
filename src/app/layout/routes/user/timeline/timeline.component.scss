@@ -4,14 +4,6 @@
     &-page {
         position: relative;
     }
-    &-block {
-        .post-container {
-            position: relative;
-            .icon-container {
-                background-color: $mediumyellow;
-            }
-        }
-    }
 }
 
 ::ng-deep .angular-editor {

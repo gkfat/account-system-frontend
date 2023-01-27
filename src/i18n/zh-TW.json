@@ -47,18 +47,20 @@
     "PROFILE": {
         "TITLE": "個人資訊"
     },
-    "TIMELINE": {
-        "TITLE": "動態牆",
-        "CREATE_POST": "發佈文章",
-        "POST_TITLE": "標題",
-        "TOTAL_POSTS": "總文章數",
-        "AUTHOR": "作者",
-        "NO_NICKNAME": "匿名勇者",
+    "POST": {
+        "POST": "文章",
+        "TITLE": "標題",
+        "DESCRIPTION": "描述",
         "CATEGORY": {
             "TITLE": "類別",
             "0": "貼文",
             "1": "公告"
         }
+    },
+    "TIMELINE": {
+        "TITLE": "動態牆",
+        "TOTAL_POSTS": "總文章數",
+        "NO_NICKNAME": "匿名勇者"
     },
     "VERIFY": {
         "RESEND": "重發驗證信",
@@ -79,7 +81,16 @@
         "CONFIRM": "確認",
         "PUBLISH": "發佈",
         "CREATED_AT": "建立時間",
-        "UPDATED_AT": "更新時間"
+        "UPDATED_AT": "更新時間",
+        "READ_MORE": "閱讀文章",
+        "CREATE": "建立",
+        "EDIT": "編輯",
+        "DELETE": "刪除",
+        "HOUR": "小時",
+        "DAY": "天",
+        "MONTH": "月",
+        "YEAR": "年",
+        "AGO": "前"
     },
     "PLACEHOLDER": {
         "ENTER_EMAIL": "輸入信箱",
@@ -93,7 +104,8 @@
         "ENTER_LASTNAME": "輸入姓氏",
         "ENTER_NICKNAME": "輸入暱稱",
         "ENTER_TITLE": "輸入標題",
-        "ENTER_CONTENT": "輸入文章內容"
+        "ENTER_CONTENT": "輸入文章內容",
+        "ENTER_DESCRIPTION": "輸入文章描述(150字)"
     },
     "WARNING": {
         "INVALID_EMAIL_FORMAT": "* 信箱格式錯誤",
@@ -118,6 +130,7 @@
         "DELETE_SUCCESS": "刪除成功！"
     },
     "CONFIRM": {
-        "DELETE_DECORATOR": "是否確定刪除裝飾？"
+        "DELETE_DECORATOR": "是否確定刪除裝飾？",
+        "DELETE_POST": "是否確定刪除文章？"
     }
 }

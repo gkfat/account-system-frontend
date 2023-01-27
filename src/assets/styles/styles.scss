@@ -124,6 +124,9 @@ body {
   &-edit {
     background-image: url(../images/edit.png);
   }
+  &-trash {
+    background-image: url(../images/trash.png);
+  }
   &-config {
     background-image: url(../images/config.png);
   }
@@ -153,4 +156,12 @@ body {
 // 隱形物件
 .invisible {
   opacity: 0;
+}
+
+// Modal
+::ng-deep .modal {
+  min-width: 80%;
+  .btn-close {
+    transform: translateX(-10px);
+  }
 }

@@ -5,8 +5,8 @@ export namespace Decorators {
     [key: string]: any;
 
     id: number = 0;
-    createdAt!: Date;
-    updatedAt!: Date;
+    createddAt: Date | null = null;
+    updatedAt: Date | null = null;
     deletedAt!: Date;
     categoryId: number = 0;
     levelLimit: number = 1;

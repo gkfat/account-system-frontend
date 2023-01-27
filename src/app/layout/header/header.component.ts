@@ -1,4 +1,4 @@
-import { switchMap } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 import { BaseComponent } from 'src/app/components/base.component';
 import { Users } from 'src/app/core/models';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { SpinnerState } from 'src/app/store/spinner/index';
 import { Store } from '@ngrx/store';
 import { AuthState, LogOutAction, selectState } from 'src/app/store/auth';
-import { tap, takeUntil } from 'rxjs';
+import { tap, takeUntil, of } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
 
@@ -49,6 +49,13 @@ export class HeaderComponent extends BaseComponent implements OnInit {
     ).subscribe();
   }
 
+  public toggleCollapse() {
+    if ( !this.isCollapsed ) {
+      this.isCollapsed = true;
+      this.cd.markForCheck();
+    }
+  }
+
   public setTranslate(lang: string) {
     this.translateServ.setDefaultLang(lang);
     this.currentLang = lang;
@@ -56,16 +63,10 @@ export class HeaderComponent extends BaseComponent implements OnInit {
 
   // 登出
   public logOut() {
-    this.socialAuthServ.initState.pipe(
-      takeUntil(this.unsubscribe$),
-      switchMap(() => this.socialAuthServ.authState),
-      tap(socialUser => {
-        if ( socialUser ) {
-          this.socialAuthServ.signOut(true);
-        }
-      }),
-      tap(() => this.authStore.dispatch(new LogOutAction()))
-    ).subscribe();
+    this.socialAuthServ
+    .signOut(true).then().catch(err => {
+      console.log({err})  
+    }).finally(() => this.authStore.dispatch(new LogOutAction()));
   }
 
   public navigateTo(url: string, params: object) {

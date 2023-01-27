@@ -2,8 +2,9 @@
 
   <!-- 使用者頭像與邊框 -->
   <div class="user-info-header-group flex-group shadow mx-auto mb-3">
-    <img class="user-info-avatar img-fluid" [src]="displayUserAvatar?.content" />
-    <img class="user-info-frame img-fluid" [src]="displayUserFrame?.content" />
+    <img class="user-info-avatar img-fluid" *ngIf="displayUser.avatar" [src]="displayUser.avatar.content" />
+    <img class="user-info-avatar-default img-fluid" *ngIf="!displayUser.avatar" />
+    <img class="user-info-frame img-fluid" *ngIf="displayUser.frame" [src]="displayUser.frame.content" />
   </div>
 
   <!-- 名牌 -->
@@ -20,21 +21,23 @@
       </span>
       <div type="button" class="icon-container icon-container-float" *ngIf="showConfigIcon"
           (click)="openModal(displayUser)">
-        <div class="icon icon-config"></div>
+        <i class="icon icon-config"></i>
       </div>
     </div>
-    <div class="user-info-experience flex-form-group w-100" *ngIf="showExp">
-      <span>Exp</span>
-      <div class="flex-grow-1">
-        <ngb-progressbar
-          type="info"
-          [showValue]="true"
-          [value]="displayUser.experience"
-          [striped]="true"
-          [height]="'100%'"
-          [animated]="true">
-        </ngb-progressbar>
-      </div>
+  </div>
+
+  <!-- Exp -->
+  <div class="container-fluid flex-form-group" *ngIf="showExp">
+    <span>Exp</span>
+    <div class="flex-grow-1">
+      <ngb-progressbar
+        type="info"
+        [showValue]="true"
+        [value]="displayUser.experience"
+        [striped]="true"
+        [height]="'100%'"
+        [animated]="true">
+      </ngb-progressbar>
     </div>
   </div>
 
@@ -78,7 +81,7 @@
               <input matInput class="form-control" type="search" [value]="user.email" [disabled]="true">
             </div>
             <!-- Avatar -->
-            <div class="w-100">
+            <div class="w-100" *ngIf="avatarSelection.length > 0">
               <label class="text-mediumgray mb-1">
                 {{ 'USER.AVATAR' | translate }}
               </label>
@@ -89,7 +92,7 @@
               </div>
             </div>
             <!-- Frame -->
-            <div class="w-100">
+            <div class="w-100" *ngIf="frameSelection.length > 0">
               <label class="text-mediumgray mb-1">
                 {{ 'USER.FRAME' | translate }}
               </label>

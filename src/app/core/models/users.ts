@@ -1,5 +1,8 @@
+import { Decorators } from './decorators';
 export namespace Users {
   export class User {
+    [key: string]: any;
+
     id: number = 0;
     createdAt: Date | null = null;
     updatedAt: Date | null = null;
@@ -15,6 +18,18 @@ export namespace Users {
     frameId: number = 0;
     sessions: Session[] = [];
     verified: boolean = false;
+    avatar: Decorators.Decorator | null = null;
+    frame: Decorators.Decorator | null = null;
+
+    constructor ( data?: any ) {
+      if ( data ) {
+        Object.keys(this).forEach(key => {
+          if ( data[key] ) {
+            this[key] = data[key];
+          }
+        });
+      }
+    }
   }
 
   export class Session {

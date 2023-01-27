@@ -7,6 +7,7 @@ export const environment = {
     facebook: '526782236173746'
   },
   storageTokenKey: 'GKProjectAccessToken',
+  storageDecoratorsKey: 'GKProjectDecorators',
   location: 'TW',
   apiURL: 'https://gkfat.com/api'
 };

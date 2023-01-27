@@ -1,4 +1,4 @@
-import { switchMap } from 'rxjs/operators';
+import { delay, switchMap } from 'rxjs/operators';
 import { ActivatedRoute, Params } from '@angular/router';
 import { UsersService } from 'src/app/api/users.service';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
@@ -16,10 +16,9 @@ import { AuthState, selectState } from 'src/app/store/auth';
 })
 export class UserComponent extends BaseComponent implements OnInit {
   private auth$ = this.authStore.select(selectState);
-  public readyToShow: boolean = false;
   public queryUserId: number | null = null;
   public queryUser: Users.User | null = null;
-  public showConfigIcon: boolean = false;
+  public isUserSelf: boolean = false;
   public user: Users.User | null = null;
   
   constructor(
@@ -31,7 +30,6 @@ export class UserComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.authListener();
-    this.routeParamListener();
   }
 
   // 監聽登入
@@ -41,7 +39,7 @@ export class UserComponent extends BaseComponent implements OnInit {
       tap(state => {
         if ( state.user ) {
           this.user = state.user;
-          this.cd.markForCheck();
+          this.routeParamListener();
         }
       })
     ).subscribe();
@@ -51,24 +49,27 @@ export class UserComponent extends BaseComponent implements OnInit {
     this.activatedRoute.queryParams.pipe(
       takeUntil(this.unsubscribe$),
       switchMap((params: Params) => {
-        this.readyToShow = false;
+        // Clear
+        this.isUserSelf = false;
         this.queryUser = null;
         this.cd.markForCheck();
         const queryUserId = parseInt(params['id']);
-        if ( queryUserId && typeof queryUserId === 'number' && !isNaN(queryUserId) ) {
+        this.isUserSelf = this.user!.id === queryUserId;
+        if ( !this.isUserSelf && queryUserId && typeof queryUserId === 'number' && !isNaN(queryUserId) ) {
           this.queryUserId = queryUserId;
           const payload = new Users.FetchUsers();
           payload.ids.push(queryUserId);
-          return this.usersServ.FetchUsers(payload);
+          return this.usersServ.FetchUsers(payload).pipe(
+            map(res => res.data.data[0])
+          );
         } else {
-          return of();
+          this.queryUserId = this.user!.id;
+          return of(this.user);
         }
       }),
-      map(res => res.data.data),
-      tap(users => {
-        this.queryUser = users[0];
-        this.showConfigIcon = this.queryUserId === this.user!.id;
-        this.readyToShow = true;
+      delay(100),
+      tap(user => {
+        this.queryUser = user;
         this.cd.markForCheck();
       })
     ).subscribe();

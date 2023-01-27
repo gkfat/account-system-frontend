@@ -12,7 +12,7 @@
         <div class="collapse navbar-collapse" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
             <!-- MENU -->
             <ul class="navbar-nav flex-grow-1">
-                <li class="nav-item">
+                <li class="nav-item" (click)="toggleCollapse()">
                     <a class="nav-link" role="button" routerLink="/news">
                         {{ 'MENU.NEWS' | translate }}
                     </a>
@@ -27,7 +27,7 @@
                     <a class="nav-link dropdown-toggle" type="button" ngbDropdownToggle>
                         {{ currentLang }}
                     </a>
-                    <ul class="dropdown-menu" ngbDropdownMenu>
+                    <ul class="dropdown-menu" ngbDropdownMenu (click)="toggleCollapse()">
                         <a class="dropdown-item" type="button" *ngFor="let lang of langs" (click)="setTranslate(lang)">
                             {{ lang }}
                         </a>
@@ -36,7 +36,7 @@
             </ul>
 
             <!-- 會員相關選單 -->
-            <ul class="navbar-nav">
+            <ul class="navbar-nav" (click)="toggleCollapse()">
                 <!-- 未登入 -->
                 <li class="nav-item" *ngIf="!user">
                     <a class="nav-link" routerLink="/log-in">
@@ -51,7 +51,7 @@
                     <!-- <li class="nav-item" ngbDropdown>
                         <a type="button" class="nav-link flex-group-nowarp" ngbDropdownToggle>
                             <div class="icon-container">
-                                <div class="icon icon-user"></div>
+                                <i class="icon icon-user"></i>
                             </div>
                         </a>
                         <ul class="dropdown-menu" ngbDropdownMenu>
@@ -64,8 +64,8 @@
                         </ul>
                     </li> -->
                     <li class="nav-item">
-                        <div class="icon-container" type="button" (click)="navigateTo('/user/timeline', { id: user.id })">
-                            <div class="icon icon-user"></div>
+                        <div class="icon-container icon-container-user" type="button" (click)="navigateTo('/user/timeline', { id: user.id })">
+                            <i class="icon icon-user"></i>
                         </div>
                     </li>
                     <li class="nav-item">

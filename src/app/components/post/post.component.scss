@@ -1,1 +1,20 @@
 @import 'src/assets/styles/styles';
+
+.post {
+  .card {
+    border-radius: 15px;
+    &-body {
+      @media screen and (max-width:768px) {
+        padding: 10px;
+      }
+    }
+  }
+  .icon-container {
+    background-color: $mediumyellow;
+    border-radius: 20px;
+    padding: 4px;
+  }
+  .ml-auto {
+    margin-left: auto;
+  }
+}

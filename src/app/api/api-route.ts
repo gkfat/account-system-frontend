@@ -16,6 +16,7 @@ export default class ApiRoute {
   static posts = {
     posts: `${environment.apiURL}/posts`,
     postsFetch: `${environment.apiURL}/posts/fetch`,
+    postsDelete: `${environment.apiURL}/posts/delete`,
   }
   static decorators = {
     decorators: `${environment.apiURL}/decorators`,

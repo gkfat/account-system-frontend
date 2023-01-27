@@ -5,9 +5,10 @@ export namespace Posts {
     [key: string]: any;
 
     id: number = 0;
-    createdAt!: Date;
-    updatedAt!: Date;
+    createdAt: Date | null = null;
+    updatedAt: Date | null = null;
     title: string = '';
+    description: string = '';
     content: string = '';
     categoryId: number = 0;
     author!: Users.User;
@@ -27,6 +28,7 @@ export namespace Posts {
     [key: string]: any;
 
     title: string = '';
+    description: string = '';
     content: string = '';
     categoryId: number = 0;
     authorId: number = 0;
@@ -47,6 +49,7 @@ export namespace Posts {
 
     id: number = 0;
     title: string = '';
+    description: string = '';
     content: string = '';
     categoryId: number = 0;
 
@@ -61,10 +64,18 @@ export namespace Posts {
     }
   }
 
+  export class DeletePost {
+    id: number = 0;
+    constructor(id: number) {
+      this.id = id;
+    }
+  }
+
   export class FetchPosts {
     [key: string]: any;
 
     ids: number[] = [];
+    withContent: boolean = false;
     authorIds: number[] = [];
     categoryIds: number[] = [];
     page: number = 1;

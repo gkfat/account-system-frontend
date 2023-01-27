@@ -13,6 +13,7 @@ import { ErrorHandlerService } from 'src/app/api/error-handler.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthState, LogOutAction, selectState, TokenLogInAction } from 'src/app/store/auth';
 import { environment } from 'src/environments/environment';
+import { SocialAuthService } from '@abacritt/angularx-social-login';
 
 @Component({
   selector: 'app-user-info',
@@ -22,6 +23,7 @@ import { environment } from 'src/environments/environment';
 })
 export class UserInfoComponent extends BaseComponent implements OnInit {
   @Input() inputUser!: Users.User | null;
+  @Input() isUserSelf: boolean = false;
   @Input() classes: string = '';
   @Input() showName: boolean = true;
   @Input() showExp: boolean = true;
@@ -29,18 +31,16 @@ export class UserInfoComponent extends BaseComponent implements OnInit {
   @Input() showConfigIcon: boolean = true;
 
   public displayUser: Users.User | null = null;
-  public displayUserAvatar: Decorators.Decorator | null = null;
-  public displayUserFrame: Decorators.Decorator | null = null;
 
   private auth$ = this.authStore.select(selectState);
   public user: Users.User | null = null;
   private tokenKey: string = environment.storageTokenKey;
+  private decoratorsKey: string = environment.storageDecoratorsKey;
 
   // 編輯使用者資料 Modal
   @ViewChild('modal') modal!: ElementRef;
   public modalRef!: NgbModalRef;
 
-  public decoratorsData: Decorators.Decorator[] = [];
   public avatarSelection: Decorators.Decorator[] = [];
   public frameSelection: Decorators.Decorator[] = [];
 
@@ -77,10 +77,10 @@ export class UserInfoComponent extends BaseComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private spinnerState: Store<SpinnerState>,
     private usersServ: UsersService,
-    private decoratorsServ: DecoratorsService,
     private errServ: ErrorHandlerService,
     private translateServ: TranslateService,
     private authStore: Store<AuthState>,
+    private socialAuthServ: SocialAuthService,
     private modalServ: NgbModal
   ) { super(); }
 
@@ -96,15 +96,13 @@ export class UserInfoComponent extends BaseComponent implements OnInit {
     this.auth$.pipe(
       takeUntil(this.unsubscribe$),
       tap(state => {
-         if ( state.user ) {
+        if ( state.user ) {
           this.user = state.user;
         }
-      }),
-      tap(() => {
         if ( this.inputUser ) {
-          this.displayUser = this.inputUser;
+          this.displayUser = new Users.User(this.inputUser);
         } else {
-          this.displayUser = this.user;
+          this.displayUser = new Users.User(this.user);
         }
         this.fetchDecorators();
       })
@@ -112,36 +110,18 @@ export class UserInfoComponent extends BaseComponent implements OnInit {
   }
 
   public fetchDecorators() {
-    this.decoratorsData = [];
-    this.avatarSelection = [];
-    this.frameSelection = [];
-    const payload = new Decorators.FetchDecorators({
-            ids: [],
-            categoryIds: [],
-            page: 0,
-            take: 100,
-            order: {
-              by: 'id',
-              order: 1
-            }
-          })
-    this.decoratorsServ.FetchDecorators(payload).pipe(
-      takeUntil(this.unsubscribe$),
-      catchError(err => {
-        this.errServ.HttpErrorHandle(err);
-        return of();
-      }),
-      map(res => res.data),
-      tap(data => {
-        this.decoratorsData = data.data;
-        this.decoratorsData.forEach(d => {
-          d.categoryId === 0 ? this.avatarSelection.push(d) : this.frameSelection.push(d);
-        })
-        this.displayUserAvatar = this.avatarSelection.filter(d => d.id === this.displayUser!.avatarId)[0];
-        this.displayUserFrame = this.frameSelection.filter(d => d.id === this.displayUser!.frameId)[0];
-        this.cd.markForCheck();
+    const storage = localStorage.getItem(this.decoratorsKey);
+    if ( storage ) {
+      const decorators: Decorators.Decorator[] = JSON.parse(storage);
+      decorators.forEach(d => {
+        d.categoryId === 0 ? this.avatarSelection.push(d) : this.frameSelection.push(d);
       })
-    ).subscribe();
+      const findAvatar = this.avatarSelection.filter(a => a.id === this.displayUser!.avatarId),
+            findFrame = this.frameSelection.filter(f => f.id === this.displayUser!.frameId);
+      findAvatar.length > 0 ? this.displayUser!.avatar = findAvatar[0] : null;
+      findFrame.length > 0 ? this.displayUser!.frame = findFrame[0] : null;
+    }
+    this.cd.markForCheck();
   }
 
   /*
@@ -252,7 +232,9 @@ export class UserInfoComponent extends BaseComponent implements OnInit {
 
   // 登出
   public logOut() {
-    this.authStore.dispatch(new LogOutAction());
+    this.socialAuthServ
+      .signOut(true).then().catch()
+      .finally(() => this.authStore.dispatch(new LogOutAction()));
   }
 
   /*
@@ -260,13 +242,15 @@ export class UserInfoComponent extends BaseComponent implements OnInit {
   */
   public openModal(user: Users.User) {
     if ( user ) {
+      const findAvatar = this.avatarSelection.filter(a => a.id === this.user!.avatarId),
+      findFrame = this.frameSelection.filter(f => f.id === this.user!.frameId);
       this.updateProfileForm.patchValue({
         id: user.id,
         firstName: user.firstName,
         lastName: user.lastName,
         nickName: user.nickName,
-        avatar: this.decoratorsData.filter(a => a.id === user.avatarId)[0],
-        frame: this.decoratorsData.filter(f => f.id === user.frameId)[0]
+        avatar: findAvatar.length > 0 ? findAvatar[0] : this.avatarSelection[0],
+        frame: findFrame.length > 0 ? findFrame[0] : this.frameSelection[0]
       });
     }
     this.modalRef = this.modalServ.open(this.modal, { size: 'lg' });

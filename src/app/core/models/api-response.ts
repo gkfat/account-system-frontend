@@ -12,7 +12,9 @@ export namespace APIResponse {
   /*
   ** User
   */
-  export class Me extends Users.User {};
+  export class Me {
+    payload!: Users.User;
+  };
 
   export class CreateUser extends Users.User {};
 

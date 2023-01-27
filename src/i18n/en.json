@@ -47,18 +47,20 @@
     "PROFILE": {
         "TITLE": "Profile"
     },
-    "TIMELINE": {
-        "TITLE": "Timeline",
-        "CREATE_POST": "Create post",
-        "POST_TITLE": "Title",
-        "TOTAL_POSTS": "Total posts",
-        "AUTHOR": "Author",
-        "NO_NICKNAME": "Anonymous Hero",
+    "POST": {
+        "POST": "Post",
+        "TITLE": "Title",
+        "DESCRIPTION": "Description",
         "CATEGORY": {
             "TITLE": "Category",
             "0": "Post",
             "1": "News"
         }
+    },
+    "TIMELINE": {
+        "TITLE": "Timeline",
+        "TOTAL_POSTS": "Total posts",
+        "NO_NICKNAME": "Anonymous Hero"
     },
     "VERIFY": {
         "RESEND": "Resend Verification",
@@ -79,7 +81,16 @@
         "CONFIRM": "Confirm",
         "PUBLISH": "Publish",
         "CREATED_AT": "Created at",
-        "UPDATED_AT": "Updated at"
+        "UPDATED_AT": "Updated at",
+        "READ_MORE": "Read more",
+        "CREATE": "Create",
+        "EDIT": "Edit",
+        "DELETE": "Delete",
+        "HOUR": " hour",
+        "DAY": " day",
+        "MONTH": " month",
+        "YEAR": " year",
+        "AGO": " ago"
     },
     "PLACEHOLDER": {
         "ENTER_EMAIL": "Enter email.",
@@ -93,7 +104,8 @@
         "ENTER_LASTNAME": "Enter last name.",
         "ENTER_NICKNAME": "Enter nickname.",
         "ENTER_TITLE": "Enter title.",
-        "ENTER_CONTENT": "Enter content."
+        "ENTER_CONTENT": "Enter content.",
+        "ENTER_DESCRIPTION": "Enter description(150 text length)."
     },
     "WARNING": {
         "INVALID_EMAIL_FORMAT": "* Invalid email format.",
@@ -118,6 +130,7 @@
         "DELETE_SUCCESS": "Successfully deleted!"
     },
     "CONFIRM": {
-        "DELETE_DECORATOR": "Confirm delete decorator?"
+        "DELETE_DECORATOR": "Confirm delete decorator?",
+        "DELETE_POST": "Confirm delete post?"
     }
 }

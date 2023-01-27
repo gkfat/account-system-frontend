@@ -1,42 +1,164 @@
-<div class="card mb-3">
-  <div class="card-header flex-group-nowarp justify-content-between">
-    <!-- Category -->
-    <div>
-      <span [class]="'btn btn-sm btn-' + (post.categoryId === 1 ? 'primary' : 'secondary')">
-        {{ 'TIMELINE.CATEGORY.' + post.categoryId | translate }}
-      </span>
+<button type="button" class="btn mb-3 btn-lg w-100 btn-yellow text-white" *ngIf="newPost" (click)="openModal('newPost')">
+  {{ 'MODEL.CREATE' | translate }}{{ 'POST.POST' | translate }}
+</button>
+  
+<div class="post" *ngIf="!newPost && post">
+  <div class="card shadow-sm mb-3">
+    <div class="card-body">
+      <!-- Category & Author -->
+      <div class="flex-group-nowarp justify-content-end mb-3">
+        <div [class]="'btn btn-sm text-nowrap me-auto btn-' + (post.categoryId === 1 ? 'primary' : 'secondary')">
+          {{ 'POST.CATEGORY.' + post.categoryId | translate }}
+        </div>
+        <div class="mx-2">
+          <!-- Posted time -->
+          <small type="button" class="text-muted me-2" [ngbTooltip]="post.createdAt | date: 'YYYY-MM-dd HH:mm'">
+            {{ postedTime.diffTime | number: '1.0-0' }} {{ 'MODEL.' + postedTime.type | translate }}{{ 'MODEL.AGO' | translate }}
+          </small>
+          <!-- Author -->
+          <small class="text-muted me-2">By</small>
+          <small type="button" class="link-primary" (click)="navigateTo('/user/timeline', { id: post.author.id })">
+            <ng-container *ngIf="!post.author.nickName || post.author.nickName === ''">
+              {{ 'TIMELINE.NO_NICKNAME' | translate }}
+            </ng-container>
+            <ng-container else>
+              {{ post.author.nickName }}
+            </ng-container>
+          </small>
+        </div>
+        <div type="button" class="icon-container me-2" *ngIf="showEditIcon" (click)="openModal('edit', post)">
+          <i class="icon icon-edit"></i>
+        </div>
+        <div type="button" class="icon-container" *ngIf="showEditIcon" (click)="deletePost(post)">
+          <i class="icon icon-trash"></i>
+        </div>
+      </div>
+      <!-- Content -->
+      <div class="mb-3">
+        <h1 class="h2 text-yellow m-0 mb-3">
+          {{ post.title }}
+        </h1>
+        <p class="card-text">
+          {{ post.description }}
+        </p>
+      </div>
+      <!-- Read more -->
+      <div class="ml-auto col col-md-4">
+        <span type="button" class="btn w-100 btn-yellow text-light" (click)="openModal('read', post)">
+          {{ 'MODEL.READ_MORE' | translate }}
+        </span>
+      </div>
     </div>
-    <!-- Author -->
-    <div class="me-4">
-      <small class="text-muted me-2">By</small>
-      <small type="button" class="link-primary" (click)="navigateTo('/user/timeline', { id: post.author.id })">
-        <ng-container *ngIf="!post.author.nickName || post.author.nickName === ''">
-          {{ 'TIMELINE.NO_NICKNAME' | translate }}
-        </ng-container>
-        <ng-container else>
-          {{ post.author.nickName }}
-        </ng-container>
-      </small>
-    </div>
-  </div>
-  <div class="card-body">
-    <!-- Posted time -->
-    <div class="mb-3">
-      <small class="text-muted me-2">
-        {{ 'MODEL.CREATED_AT' | translate }}
-      </small>
-      <small class="text-primary me-2">
-        {{ post.createdAt | date: 'YYYY-MM-dd HH:mm' }}
-      </small>
-      <small class="text-muted me-2">
-        {{ 'MODEL.UPDATED_AT' | translate }}
-      </small>
-      <small class="text-primary">
-        {{ post.updatedAt | date: 'YYYY-MM-dd HH:mm' }}
-      </small>
-    </div>
-    <!-- Content -->
-    <h4 class="card-title text-yellow mb-3">{{ post.title }}</h4>
-    <div class="card-text" [innerHTML]="post.content"></div>
   </div>
 </div>
+
+
+<!-- 文章 Modal -->
+<ng-template #editPostModal let-modal>
+  <!-- Read mode -->
+  <ng-container *ngIf="post && modalStatus === 'read'">
+    <div class="modal-header">
+      <h4 class="h3 modal-title text-yellow mb-2">
+        {{ post.title }}
+      </h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.close()"></button>
+    </div>
+    <div class="modal-body">
+      <div class="mb-3">
+        <!-- Posted time -->
+        <small type="button" class="text-muted me-2" [ngbTooltip]="post.createdAt | date: 'YYYY-MM-dd HH:mm'">
+          {{ postedTime.diffTime | number: '1.0-0' }} {{ 'MODEL.' + postedTime.type | translate }}{{ 'MODEL.AGO' | translate }}
+        </small>
+        <!-- Author -->
+        <small class="text-muted me-2">By</small>
+        <small type="button" class="link-primary" (click)="navigateTo('/user/timeline', { id: post.author.id })">
+          <ng-container *ngIf="!post.author.nickName || post.author.nickName === ''">
+            {{ 'TIMELINE.NO_NICKNAME' | translate }}
+          </ng-container>
+          <ng-container else>
+            {{ post.author.nickName }}
+          </ng-container>
+        </small>
+      </div>
+      <p class="text-muted mb-3">
+        {{ post.description }}
+      </p>
+      <hr class="m-0 mb-3">
+      <div [innerHTML]="getFormControl().content.value"></div>
+    </div>
+  </ng-container>
+
+  <!-- Edit / Create mode -->
+  <ng-container *ngIf="modalStatus !== 'read'">
+    <div class="modal-header">
+      <h4 class="modal-title">
+        <span *ngIf="modalStatus === 'newPost' ">
+          {{ 'MODEL.CREATE' | translate }}{{ 'POST.POST' | translate }}
+        </span>
+        <span *ngIf="modalStatus === 'edit' ">
+          {{ 'MODEL.EDIT' | translate }}{{ 'POST.POST' | translate }}
+        </span>
+      </h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.close()"></button>
+    </div>
+    <div class="modal-body">
+      <form class="flex-form-group" [formGroup]="postForm">
+         <!-- Admin: Category -->
+         <div class="w-100 mb-1">
+          <label class="text-mediumgray mb-1">
+            {{ 'POST.CATEGORY.TITLE' | translate }}
+          </label>
+          <select class="form-select form-control" formControlName="categoryId">
+            <option *ngFor="let categoryId of categoryIdSelection" [value]="categoryId">
+              {{ 'POST.CATEGORY.' + categoryId | translate }}
+            </option>
+          </select>
+        </div>
+        <!-- Title -->
+        <div class="w-100 mb-1">
+          <label class="text-mediumgray mb-1">
+            {{ 'POST.TITLE' | translate }}
+          </label>
+          <input matInput class="form-control" type="search" autocomplete="off" formControlName="title"
+              [class]="{ 'input-error': getFormControl().title.errors }"
+              placeholder="{{ 'PLACEHOLDER.ENTER_TITLE' | translate }}">
+          <small class="text-red" *ngIf="getFormControl().title.hasError('required')">
+              {{ 'WARNING.FIELD_REQUIRED' | translate }}
+          </small>
+        </div>
+        <!-- Description -->
+        <div class="w-100">
+          <label class="text-mediumgray mb-1">
+            {{ 'POST.DESCRIPTION' | translate }}
+          </label>
+          <textarea matInput class="form-control" style="resize:none;" formControlName="description"
+              [class]="{ 'input-error': getFormControl().description.errors }"
+              [placeholder]="'PLACEHOLDER.ENTER_DESCRIPTION' | translate">
+          </textarea>
+          <small class="text-red" *ngIf="getFormControl().description.hasError('required')">
+              {{ 'WARNING.FIELD_REQUIRED' | translate }}
+          </small>
+        </div>
+        <!-- Content -->
+        <div class="w-100">
+            <angular-editor formControlName="content" [config]="editorConfig"></angular-editor>
+            <small class="text-red" *ngIf="getFormControl().content.hasError('required')">
+                {{ 'WARNING.FIELD_REQUIRED' | translate }}
+            </small>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <ng-container *ngIf="getFormControl().id.value === 0">
+        <button type="button" class="btn btn-lg mt-3 text-white w-100 btn-yellow" (click)="createPost()">
+          {{ 'MODEL.PUBLISH' | translate }}
+        </button>
+      </ng-container>
+      <ng-container *ngIf="getFormControl().id.value !== 0">
+        <button type="button" class="btn btn-lg mt-3 text-white w-100 btn-yellow" (click)="updatePost()">
+          {{ 'MODEL.PUBLISH' | translate }}
+        </button>
+      </ng-container>
+    </div>
+  </ng-container>
+</ng-template>
