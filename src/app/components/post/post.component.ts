@@ -201,12 +201,12 @@ export class PostComponent extends BaseComponent implements OnInit {
       type = 'DAY';
     }
     // Day
-    if ( diffTime >= 30 ) {
+    if ( diffTime >= 30 && type === 'DAY' ) {
       diffTime = diffTime / 30;
       type = 'MONTH';
     }
     // Month
-    if ( diffTime >= 12 ) {
+    if ( diffTime >= 12 && type === 'MONTH' ) {
       diffTime = diffTime / 12;
       type = 'YEAR';
     }

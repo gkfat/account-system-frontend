@@ -24,13 +24,13 @@ else
     exit 1
 fi
 
-echo "Backup remote"
-if ssh -i $CERT_KEY $REMOTE_USER@$REMOTE_SERVER "sudo cp -r $REMOTE_BIN $REMOTE_BIN-$TODAY" ; then
-    printf "${GREEN}Backup $REMOTE_SERVER Completed${NC}\n"
-else
-    printf "${RED}Backup $REMOTE_SERVER Failed${NC}\n"
-    exit 1
-fi
+# echo "Backup remote"
+# if ssh -i $CERT_KEY $REMOTE_USER@$REMOTE_SERVER "sudo cp -r $REMOTE_BIN $REMOTE_BIN-$TODAY" ; then
+#     printf "${GREEN}Backup $REMOTE_SERVER Completed${NC}\n"
+# else
+#     printf "${RED}Backup $REMOTE_SERVER Failed${NC}\n"
+#     exit 1
+# fi
 
 echo "Uploading to $REMOTE_SERVER"
 if rsync -e "ssh -i $CERT_KEY" --rsync-path "sudo rsync" -avr $PROJECTPATH/dist/* $REMOTE_USER@$REMOTE_SERVER:$REMOTE_BIN ; then
